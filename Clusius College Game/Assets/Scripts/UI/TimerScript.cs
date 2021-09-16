@@ -11,7 +11,7 @@ public class TimerScript : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI _TimerText;
 
-    bool _TimerIsRunning = false;
+    bool _TimerIsRunning = false;  
 
     private void Start()
     {
@@ -41,6 +41,6 @@ public class TimerScript : MonoBehaviour
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60); 
         
-        _TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        _TimerText.text = string.Format("{0:0}:{1:00}", minutes, seconds);
     }
 }
