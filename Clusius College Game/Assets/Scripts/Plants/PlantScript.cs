@@ -31,8 +31,8 @@ public class PlantScript : MonoBehaviour
     public void StartPlantGrowth(Plant plantedPlant)
     {
         _Plant = plantedPlant;
-        _Timer.ToggleOnOffTimmer();
         _Timer.SetTimer(plantedPlant.TimeToGrow);
+        _Timer.ToggleOnOffTimmer();        
         _Timer.onTimerRunOut += nextPhase;
     }
 
