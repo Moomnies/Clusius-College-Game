@@ -18,17 +18,20 @@ public class PlantScript : MonoBehaviour
     [SerializeField]
     Plant _Plant;
     [SerializeField]
+    Plant _TestPlant;
+    [SerializeField]
     TimerScript _Timer;
 
-    private void Start()
+     IEnumerator Start()
     {
-        _Timer.SetTimer(_Plant.TimeToGrow);
-        _Timer.onTimerRunOut += nextPhase;
+        yield return new WaitForSeconds(2);
+        StartPlantGrowth(_TestPlant);
     }
 
     public void StartPlantGrowth(Plant plantedPlant)
     {
         _Plant = plantedPlant;
+        _Timer.ToggleOnOffTimmer();
         _Timer.SetTimer(plantedPlant.TimeToGrow);
         _Timer.onTimerRunOut += nextPhase;
     }
@@ -51,10 +54,11 @@ public class PlantScript : MonoBehaviour
             case PlantStates.Flowering:
                 _PlantState = PlantStates.Produce;
                 Debug.Log(_PlantState);
+                _Timer.ToggleOnOffTimmer();
                 break;
 
             case PlantStates.Produce:
-
+               
                 break;
 
             default:

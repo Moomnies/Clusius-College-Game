@@ -12,6 +12,8 @@ public class TimerScript : MonoBehaviour
     [SerializeField] float _CurrentTimer;
     [SerializeField] TextMeshProUGUI _TimerText;
 
+    bool _IsTimerOn = false;
+
     bool _TimerIsRunning = false;  
 
     public void SetTimer(float timeCount)
@@ -21,9 +23,7 @@ public class TimerScript : MonoBehaviour
 
     void Start()
     {
-        _TimerIsRunning = true;
-        _CurrentTimer = _TimeCount;
-        onTimerRunOut += ResetTimer;
+       
     }
 
     void Update()
@@ -50,9 +50,17 @@ public class TimerScript : MonoBehaviour
         _CurrentTimer = _TimeCount;
     }
 
-    public void TestStateSwitch()
+    public void ToggleOnOffTimmer()
     {
-        onTimerRunOut();
+        _IsTimerOn = !_IsTimerOn;
+        this.gameObject.SetActive(_IsTimerOn);
+
+        if (_IsTimerOn)
+        {
+            _TimerIsRunning = true;
+            _CurrentTimer = _TimeCount;
+            onTimerRunOut += ResetTimer;
+        }
     }
     
     void DisplayTime(float timeToDisplay)
