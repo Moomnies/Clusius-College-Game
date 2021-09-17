@@ -16,20 +16,10 @@ public class TimerScript : MonoBehaviour
 
     bool _TimerIsRunning = false;  
 
-    public void SetTimer(float timeCount)
-    {
-        _TimeCount = timeCount;
-    }
+    public void SetTimer(float timeCount) => _TimeCount = timeCount;
 
-    void Start()
-    {
-       
-    }
-
-    void Update()
-    {
-        CountTimer();
-    }
+    void Update() => CountTimer();
+    void ResetTimer() => _CurrentTimer = _TimeCount;
 
     void CountTimer()
     {
@@ -43,12 +33,7 @@ public class TimerScript : MonoBehaviour
             //Set Off Event in Plant Script
             onTimerRunOut();            
         }
-    }
-
-    void ResetTimer()
-    {
-        _CurrentTimer = _TimeCount;
-    }
+    }   
 
     public void ToggleOnOffTimmer()
     {

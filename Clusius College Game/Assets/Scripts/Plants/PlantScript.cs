@@ -22,7 +22,7 @@ public class PlantScript : MonoBehaviour
     [SerializeField]
     TimerScript _Timer;
 
-     IEnumerator Start()
+    IEnumerator Start()
     {
         yield return new WaitForSeconds(2);
         StartPlantGrowth(_TestPlant);
@@ -35,7 +35,6 @@ public class PlantScript : MonoBehaviour
         _Timer.ToggleOnOffTimmer();        
         _Timer.onTimerRunOut += nextPhase;
     }
-
 
     void nextPhase()
     {       
