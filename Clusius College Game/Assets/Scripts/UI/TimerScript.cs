@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,33 +6,53 @@ using UnityEngine;
 
 public class TimerScript : MonoBehaviour
 {
-    [SerializeField]
-    float _TimeCount = 300;    
+    public event Action onTimerRunOut;
 
-    [SerializeField]
-    TextMeshProUGUI _TimerText;
+    [SerializeField] float _TimeCount = 300;
+    [SerializeField] float _CurrentTimer;
+    [SerializeField] TextMeshProUGUI _TimerText;
 
     bool _TimerIsRunning = false;  
 
-    private void Start()
+    public void SetTimer(float timeCount)
     {
-        _TimerIsRunning = true;
+        _TimeCount = timeCount;
     }
 
-    private void Update()
+    void Start()
     {
-        if (_TimerIsRunning && _TimeCount > 0)
+        _TimerIsRunning = true;
+        _CurrentTimer = _TimeCount;
+        onTimerRunOut += ResetTimer;
+    }
+
+    void Update()
+    {
+        CountTimer();
+    }
+
+    void CountTimer()
+    {
+        if (_TimerIsRunning && _CurrentTimer > 0)
         {
-            _TimeCount -= Time.deltaTime;
-            DisplayTime(_TimeCount);
-        } 
-        else if(_TimerIsRunning && _TimeCount <= 0)
+            _CurrentTimer -= Time.deltaTime;
+            DisplayTime(_CurrentTimer);
+        }
+        else if (_TimerIsRunning && _CurrentTimer <= 0)
         {
             //Set Off Event in Plant Script
+            onTimerRunOut();            
+        }
+    }
 
-            _TimeCount = 10;
-            _TimerIsRunning = false;
-        }        
+    void ResetTimer()
+    {
+        _CurrentTimer = _TimeCount;
+    }
+
+    public void TestStateSwitch()
+    {
+        onTimerRunOut();
     }
     
     void DisplayTime(float timeToDisplay)
