@@ -13,14 +13,13 @@ public class PlantScript : MonoBehaviour
         Produce
     }
 
-    [SerializeField]
-    PlantStates _PlantState = PlantStates.Sapling;
-    [SerializeField]
-    Plant _Plant;
-    [SerializeField]
-    Plant _TestPlant;
-    [SerializeField]
-    TimerScript _Timer;
+    [SerializeField]    PlantStates _PlantState = PlantStates.Sapling;
+    [SerializeField]    Plant _Plant;
+    [SerializeField]    Plant _TestPlant;
+    [SerializeField]    TimerScript _Timer;
+    [SerializeField]    Mesh[] _PlantMeshes;
+    [SerializeField]    MeshFilter _GameObjectMesh;
+    [SerializeField]    int _MeshOrder = 0;
 
     IEnumerator Start()
     {
@@ -29,36 +28,60 @@ public class PlantScript : MonoBehaviour
     }
 
     public void StartPlantGrowth(Plant plantedPlant)
-    {
-        _Plant = plantedPlant;
-        _Timer.SetTimer(plantedPlant.TimeToGrow);
-        _Timer.ToggleOnOffTimmer();        
-        _Timer.onTimerRunOut += nextPhase;
+    {        
+        SetUpTimer(plantedPlant);
+        SetUpPlantData(plantedPlant);
     }
 
-    void nextPhase()
+    private void SetUpTimer(Plant plantedPlant)
+    {
+        _Timer.SetTimer(plantedPlant.TimeToGrow);
+        _Timer.ToggleOnOffTimmer();
+        _Timer.onTimerRunOut += NextPhase;
+    }
+
+    private void SetUpPlantData(Plant plantedPlant)
+    {
+        _PlantMeshes = new Mesh[plantedPlant.PlantModels.Length];
+        _GameObjectMesh = this.gameObject.GetComponent<MeshFilter>();
+
+        for (int i = 0; i < _PlantMeshes.Length; i++)
+        {
+            _PlantMeshes[i] = plantedPlant.PlantModels[i];
+        }
+    }
+
+    private void NextPlantMesh()
+    {
+        _GameObjectMesh.mesh = _PlantMeshes[_MeshOrder + 1];
+        _MeshOrder++;
+    }
+
+    void NextPhase()
     {       
         switch (_PlantState)
         {
             case PlantStates.Sapling:
+
                 _PlantState = PlantStates.Smallplant;
-                Debug.Log(_PlantState);
+                NextPlantMesh();  
+                
                 break;
 
             case PlantStates.Smallplant:
+
                 _PlantState = PlantStates.Flowering;
-                Debug.Log(_PlantState);
+                NextPlantMesh();   
+                
                 break;
 
             case PlantStates.Flowering:
                 _PlantState = PlantStates.Produce;
-                Debug.Log(_PlantState);
+                NextPlantMesh(); 
+                
                 _Timer.ToggleOnOffTimmer();
-                break;
 
-            case PlantStates.Produce:
-               
-                break;
+                break;     
 
             default:
                 Debug.LogFormat("State not found: {0}", _PlantState);

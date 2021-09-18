@@ -13,7 +13,6 @@ public class TimerScript : MonoBehaviour
     [SerializeField] TextMeshProUGUI _TimerText;
 
     bool _IsTimerOn = false;
-
     bool _TimerIsRunning = false;  
 
     public void SetTimer(float timeCount) => _TimeCount = timeCount;

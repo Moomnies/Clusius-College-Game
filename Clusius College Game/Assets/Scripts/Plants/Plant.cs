@@ -9,7 +9,8 @@ public class Plant : ScriptableObject
     float _TimeToGrow;
 
     [SerializeField]
-    GameObject[] _PlantModels = new GameObject[4];
+    Mesh[] _PlantModels = new Mesh[4];
 
     public float TimeToGrow { get => _TimeToGrow; set => _TimeToGrow = value; }
+    public Mesh[] PlantModels { get => _PlantModels; set => _PlantModels = value; }
 }
