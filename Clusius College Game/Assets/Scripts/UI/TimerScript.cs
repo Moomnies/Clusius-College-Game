@@ -16,7 +16,6 @@ public class TimerScript : MonoBehaviour
     bool _TimerIsRunning = false;  
 
     public void SetTimer(float timeCount) => _TimeCount = timeCount;
-
     void Update() => CountTimer();
     void ResetTimer() => _CurrentTimer = _TimeCount;
 
