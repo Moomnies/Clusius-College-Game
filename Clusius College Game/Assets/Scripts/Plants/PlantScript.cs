@@ -20,6 +20,7 @@ public class PlantScript : MonoBehaviour
     [SerializeField]    Mesh[] _PlantMeshes;
     [SerializeField]    MeshFilter _GameObjectMesh;
     [SerializeField]    int _MeshOrder = 0;
+    [SerializeField]    bool _HarvestReady = false;
 
     IEnumerator Start()
     {
@@ -57,6 +58,14 @@ public class PlantScript : MonoBehaviour
         _MeshOrder++;
     }
 
+    private void Update()
+    {
+        if (_HarvestReady)
+        {
+
+        }
+    }
+
     void NextPhase()
     {       
         switch (_PlantState)
@@ -77,7 +86,9 @@ public class PlantScript : MonoBehaviour
 
             case PlantStates.Flowering:
                 _PlantState = PlantStates.Produce;
-                NextPlantMesh(); 
+                NextPlantMesh();
+
+                _HarvestReady = true;
                 
                 _Timer.ToggleOnOffTimmer();
 
