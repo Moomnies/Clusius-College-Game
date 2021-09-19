@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
         if(_InventoryMenu != null && !_InventoryMenu.activeSelf)
         {
             _InventoryMenu.SetActive(true);
+
+
         }
     }
 
