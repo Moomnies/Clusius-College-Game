@@ -6,10 +6,16 @@ public class Aarde : MonoBehaviour
 {
     Collider col;
     public Camera mainCamera;
+    public bool holdsShuffol;
+    public bool holdsSeed;
+    public bool dirtHasSeed;
+    public GameObject hole;
     // Start is called before the first frame update
     void Start()
     {
         col = GetComponent<BoxCollider>();
+        hole = GameObject.Find("Hole");
+        holdsShuffol = true;
     }
 
     // Update is called once per frame
@@ -27,6 +33,26 @@ public class Aarde : MonoBehaviour
                 if (touch.phase == TouchPhase.Began)
                 {
                     Debug.Log("aarde is geklikt");
+
+                    if (holdsShuffol && dirtHasSeed == false)
+                    {
+                        Debug.Log("aarde is gegraven");
+                        hole.active = false;
+                        holdsShuffol = false;
+                        holdsSeed = true;
+                    } 
+                    else if (holdsSeed && dirtHasSeed == false)
+                    {
+                        Debug.Log("aarde heeft zaadje");
+                        holdsShuffol = true;
+                        holdsSeed = false;
+                        dirtHasSeed = true;
+                    }
+                    else if (holdsShuffol && dirtHasSeed == true)
+                    {
+                        Debug.Log("gat is dicht is dicht");
+                        hole.active = true;
+                    }
                 }
             }
         }
