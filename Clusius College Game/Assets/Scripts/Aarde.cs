@@ -14,7 +14,6 @@ public class Aarde : MonoBehaviour
     void Start()
     {
         col = GetComponent<BoxCollider>();
-        hole = GameObject.Find("Hole");
         holdsShuffol = true;
     }
 
@@ -37,7 +36,7 @@ public class Aarde : MonoBehaviour
                     if (holdsShuffol && dirtHasSeed == false)
                     {
                         Debug.Log("aarde is gegraven");
-                        hole.active = false;
+                        hole.SetActive(false);
                         holdsShuffol = false;
                         holdsSeed = true;
                     } 
@@ -51,7 +50,7 @@ public class Aarde : MonoBehaviour
                     else if (holdsShuffol && dirtHasSeed == true)
                     {
                         Debug.Log("gat is dicht is dicht");
-                        hole.active = true;
+                        hole.SetActive(true);
                     }
                 }
             }
