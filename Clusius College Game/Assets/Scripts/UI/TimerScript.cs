@@ -7,19 +7,21 @@ using UnityEngine;
 public class TimerScript : MonoBehaviour
 {
     public event Action onTimerRunOut;
-
-    [SerializeField] float _TimeCount = 300;
-    [SerializeField] float _CurrentTimer;
-    [SerializeField] TextMeshProUGUI _TimerText;
+    
+    [SerializeField] [Tooltip("Reference to UI Text of Timer")] 
+    TextMeshProUGUI _TimerText;
 
     bool _IsTimerOn = false;
-    bool _TimerIsRunning = false;  
+    bool _TimerIsRunning = false;
+    float _TimeCount;
+    float _CurrentTimer;
 
-    public void SetTimer(float timeCount) => _TimeCount = timeCount;
-    void Update() => CountTimer();
+    public void SetTimerValue(float timeCount) => _TimeCount = timeCount;
+
+    void Update() => CountDownTimer();
     void ResetTimer() => _CurrentTimer = _TimeCount;
 
-    void CountTimer()
+    void CountDownTimer()
     {
         if (_TimerIsRunning && _CurrentTimer > 0)
         {

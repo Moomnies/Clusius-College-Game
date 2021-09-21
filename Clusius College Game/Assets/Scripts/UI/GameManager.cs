@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject _InventoryMenu;
-    [SerializeField] GameObject _PlayerSettingsMenu;
+    [SerializeField] [Tooltip("Reference to the Inventory UI.")]
+    GameObject _InventoryMenu;
+    [SerializeField] [Tooltip("Reference to the Player Settings Menu.")]
+    GameObject _PlayerSettingsMenu;
 
     public void OpenInventory()
     {
         if(_InventoryMenu != null && !_InventoryMenu.activeSelf)
         {
-            _InventoryMenu.SetActive(true);
-
-
+            _InventoryMenu.SetActive(true);          
         }
     }
 
