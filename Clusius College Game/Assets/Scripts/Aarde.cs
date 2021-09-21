@@ -4,19 +4,13 @@ using UnityEngine;
 
 public class Aarde : MonoBehaviour
 {
-    Collider col;
-    public Camera mainCamera;
-    public bool holdsShuffol;
-    public bool holdsSeed;
-    public bool dirtHasSeed;
-    public GameObject hole;
-    // Start is called before the first frame update
-    void Start()
-    {
-        col = GetComponent<BoxCollider>();
-        holdsShuffol = true;
-    }
-
+    [SerializeField] Collider col;
+    [SerializeField] Camera mainCamera;
+    [SerializeField] bool holdsShuffol = true;
+    [SerializeField] bool holdsSeed;
+    [SerializeField] bool dirtHasSeed;
+    [SerializeField] GameObject hole;
+    
     // Update is called once per frame
     void Update()
     {
