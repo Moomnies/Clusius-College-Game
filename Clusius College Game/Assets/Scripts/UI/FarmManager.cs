@@ -4,20 +4,24 @@ using UnityEngine;
 
 public static class FarmManager
 {
-    private static Dictionary<string, GameObject> _PlantInScene = new Dictionary<string, GameObject>();
+    private static Dictionary<string, PlantManager> _PlantInScene = new Dictionary<string, PlantManager>();
     private static string _SelectedPlanted;
 
-    static public void AddMeToManager(GameObject plantToAdd, string plantID)
+    public static void AddMeToManager(PlantManager plantToAdd)
     {
-        if (plantToAdd.GetComponent<PlantManager>() && plantID != null)
+        if (plantToAdd.GetComponent<PlantManager>() && plantToAdd.GetID != null)
         {
-            _PlantInScene.Add(plantID, plantToAdd);
+            _PlantInScene.Add(plantToAdd.GetID, plantToAdd);
         }
         else { Debug.LogFormat("Tried to add {0} to PlantsInSceneArray while this is not a plant", plantToAdd.name); }
     }
 
-    static public void PlantAPlant(Plant plantThatsPlanted)
+    public static void PlantAPlant(Plant plantThatsPlanted)
     {
-        _PlantInScene[_SelectedPlanted].GetComponent<PlantManager>().Plant = plantThatsPlanted;
+        _PlantInScene[_SelectedPlanted].Plant = plantThatsPlanted;
+    }
+    public static void ThisPlantIsTouched(string plantID)
+    {
+        _PlantInScene[plantID].ExecuteBehaviourOnClick();
     }
 }

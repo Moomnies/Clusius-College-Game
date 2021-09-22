@@ -19,7 +19,10 @@ public class TimerScript : MonoBehaviour
     public void SetTimerValue(float timeCount) => _TimeCount = timeCount;
 
     void Update() => CountDownTimer();
-    void ResetTimer() => _CurrentTimer = _TimeCount;
+    public void ResetTimer()
+    {       
+        _CurrentTimer = _TimeCount;
+    }
 
     void CountDownTimer()
     {
@@ -39,9 +42,10 @@ public class TimerScript : MonoBehaviour
     {
         _IsTimerOn = !_IsTimerOn;
         this.gameObject.SetActive(_IsTimerOn);
+        Debug.Log("timer");
 
         if (_IsTimerOn)
-        {
+        {          
             _TimerIsRunning = true;
             _CurrentTimer = _TimeCount;
             onTimerRunOut += ResetTimer;

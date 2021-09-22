@@ -16,10 +16,10 @@ public class PlantScript : MonoBehaviour
         Produce
     }
     
-    PlantStates _PlantState = PlantStates.Sapling;    
-    MeshFilter _GameObjectMesh;  
+    [SerializeField] PlantStates _PlantState = PlantStates.Sapling;    
+    [SerializeField]MeshFilter _GameObjectMesh;  
     Mesh[] _PlantStageMeshes;    
-    int _OrderInMesh = 0; 
+    int _OrderInMesh = 0;    
 
     /// <summary>
     /// Adds Meshed from the SO to the _PlantMeshes so the meshes can change per plant growth cicle.
@@ -28,7 +28,7 @@ public class PlantScript : MonoBehaviour
     public void SetUpPlantData(Plant plantedPlant)
     {
         _PlantStageMeshes = new Mesh[plantedPlant.PlantModels.Length];
-        _GameObjectMesh = this.gameObject.GetComponent<MeshFilter>();
+        //_GameObjectMesh = this.gameObject.GetComponent<MeshFilter>();
 
         for (int i = 0; i < _PlantStageMeshes.Length; i++)
         {
@@ -53,15 +53,15 @@ public class PlantScript : MonoBehaviour
         switch (_PlantState)
         {
             case PlantStates.Sapling:
-                _PlantState = PlantStates.Smallplant;       
+                _PlantState = PlantStates.Smallplant;                
                 break;
 
             case PlantStates.Smallplant:
-                _PlantState = PlantStates.Flowering;              
+                _PlantState = PlantStates.Flowering;               
                 break;
 
             case PlantStates.Flowering:
-                _PlantState = PlantStates.Produce;
+                _PlantState = PlantStates.Produce;                
                 onHarvestReady();         
                 break;     
 

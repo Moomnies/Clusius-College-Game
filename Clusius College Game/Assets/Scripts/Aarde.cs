@@ -1,67 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Aarde : MonoBehaviour
 {
-    [SerializeField] Collider col;
-    [SerializeField] Camera mainCamera;
-    [SerializeField] bool holdsShuffol = true;
-    [SerializeField] bool holdsSeed;
-    [SerializeField] bool dirtHasSeed;
-    [SerializeField] GameObject hole;
-    [SerializeField] Vector2 tempClickpunt;
-
-    // Update is called once per frame
-    void Update()
+    public event Action onPlantPlanted;
+    enum DigStates 
+    { 
+        Hole,
+        SeedPlanted,
+        HoleClosed
+    }     
+  
+    [SerializeField] DigStates _CurrentState = DigStates.Hole;
+    [SerializeField] Mesh[] _GroundMeshes;
+    [SerializeField] MeshFilter _MeshRenderer;
+    
+    public void ExecuteDigBehaviour()
     {
-        if (Input.touchCount > 0)
+        switch (_CurrentState)
         {
-            Touch touch = Input.touches[0];
-            Vector3 clickpunt = touch.position;
-            RaycastHit hit;
-            Ray ray = mainCamera.ScreenPointToRay(clickpunt);
+            case DigStates.Hole:                
+                Debug.Log("Dug Hole");
+                _MeshRenderer.mesh = _GroundMeshes[1];
+                break;
+            case DigStates.SeedPlanted:
+                Debug.Log("Planted Seed");
+                break;
+            case DigStates.HoleClosed:                
+                Debug.Log("Closed Hole");
+                _MeshRenderer.mesh = _GroundMeshes[2];
+                onPlantPlanted();
+                break;
+            default:
+                break;
+        };
 
-            if (Physics.Raycast(ray, out hit) && hit.collider.tag == "Player")
-            {
-                if (touch.phase == TouchPhase.Began)
-                {
-                    tempClickpunt = touch.position;
-                    Debug.Log("aarde is geklikt");
-
-                    if (holdsShuffol && dirtHasSeed == false)
-                    {
-                        Debug.Log("aarde is gegraven");
-                        hole.SetActive(false);
-                        holdsShuffol = false;
-                        holdsSeed = true;
-                    } 
-                    else if (holdsSeed && dirtHasSeed == false)
-                    {
-                        Debug.Log("aarde heeft zaadje");
-                        holdsShuffol = true;
-                        holdsSeed = false;
-                        dirtHasSeed = true;
-                    }
-                    else if (holdsShuffol && dirtHasSeed == true)
-                    {
-                       /* Debug.Log("gat is dicht is dicht");
-                        hole.SetActive(true);*/
-                    }
-                }
-
-                if (touch.phase == TouchPhase.Moved)
-                {
-                    if (holdsShuffol && dirtHasSeed == true)
-                    {
-                        if (Vector2.Distance(tempClickpunt,touch.position) > 15) 
-                        {
-                            Debug.Log("gat is dicht is dicht");
-                            hole.SetActive(true);
-                        }
-                    }
-                }
-            }
-        }
-    }
+        _CurrentState++;
+    }   
 }
