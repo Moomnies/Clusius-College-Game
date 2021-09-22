@@ -23,12 +23,12 @@ public class TimerScript : MonoBehaviour
 
     void CountDownTimer()
     {
-        if (_TimerIsRunning && _CurrentTimer > 0)
+        if (_TimerIsRunning && _CurrentTimer > -.1)
         {
             _CurrentTimer -= Time.deltaTime;
             DisplayTime(_CurrentTimer);
         }
-        else if (_TimerIsRunning && _CurrentTimer <= 0)
+        else if (_TimerIsRunning && _CurrentTimer <= -.1)
         {
             //Set Off Event in Plant Script
             onTimerRunOut();            

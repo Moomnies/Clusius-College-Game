@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlantScript : MonoBehaviour
 {
+    public event Action onHarvestReady;
+
     //Enum to track the current PlantStage
     enum PlantStates
     {
@@ -13,54 +15,17 @@ public class PlantScript : MonoBehaviour
         Flowering,
         Produce
     }
-
-    [SerializeField] [Tooltip("State that a plant is currenly in. Debug Only.")]
-    PlantStates _PlantState = PlantStates.Sapling;
-    [SerializeField] [Tooltip("Reference to Mesh Renderer on this Object")]
-    MeshFilter _GameObjectMesh;
-    [SerializeField] [Tooltip("Reference to Plant SO, This is for testing Only")]
-    Plant _TestPlant;
-    [SerializeField] [Tooltip("Reference to UI that has TimerScript on it")]
-    TimerScript _Timer;
-
-    Plant _CurrentlyGrowingPlant;
+    
+    PlantStates _PlantState = PlantStates.Sapling;    
+    MeshFilter _GameObjectMesh;  
     Mesh[] _PlantStageMeshes;    
-    int _OrderInMesh = 0;
-    bool _IsHarvestReady = false;
-
-    //Coroutine to Test Script. Will load in SO placed in _TestPlant 
-    IEnumerator Start()
-    {
-        yield return new WaitForSeconds(2);
-        StartPlantGrowth(_TestPlant);
-    }
-
-    /// <summary>
-    /// Will Set up Timer and MeshData
-    /// </summary>
-    /// <param name="plantedPlant"> The SO that of the Type of Plant that was planted</param>
-    public void StartPlantGrowth(Plant plantedPlant)
-    {        
-        SetUpTimer(plantedPlant);
-        SetUpPlantData(plantedPlant);
-    }
-
-    /// <summary>
-    /// Sets up Timer for this specific Plant, Also Subscribes NextPhase to Timer Event -> See Timer
-    /// </summary>
-    /// <param name="plantedPlant">The SO that of the Type of Plant that was planted</param>
-    private void SetUpTimer(Plant plantedPlant)
-    {
-        _Timer.SetTimerValue(plantedPlant.TimeToGrow);
-        _Timer.ToggleOnOffTimmer();
-        _Timer.onTimerRunOut += NextPhase;
-    }
+    int _OrderInMesh = 0; 
 
     /// <summary>
     /// Adds Meshed from the SO to the _PlantMeshes so the meshes can change per plant growth cicle.
     /// </summary>
     /// <param name="plantedPlant">The SO that of the Type of Plant that was planted</param>
-    private void SetUpPlantData(Plant plantedPlant)
+    public void SetUpPlantData(Plant plantedPlant)
     {
         _PlantStageMeshes = new Mesh[plantedPlant.PlantModels.Length];
         _GameObjectMesh = this.gameObject.GetComponent<MeshFilter>();
@@ -83,7 +48,7 @@ public class PlantScript : MonoBehaviour
     /// <summary>
     /// Will use Enum to switch to next phase and execute behaviour
     /// </summary>
-    void NextPhase()
+    public void NextPhase()
     {       
         switch (_PlantState)
         {
@@ -96,9 +61,8 @@ public class PlantScript : MonoBehaviour
                 break;
 
             case PlantStates.Flowering:
-                _PlantState = PlantStates.Produce;                
-                _IsHarvestReady = true;
-                _Timer.ToggleOnOffTimmer();
+                _PlantState = PlantStates.Produce;
+                onHarvestReady();         
                 break;     
 
             default:
@@ -107,9 +71,5 @@ public class PlantScript : MonoBehaviour
         }
 
         NextPlantMesh();
-
     }
-
-
-
 }
