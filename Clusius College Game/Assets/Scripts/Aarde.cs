@@ -10,7 +10,8 @@ public class Aarde : MonoBehaviour
     [SerializeField] bool holdsSeed;
     [SerializeField] bool dirtHasSeed;
     [SerializeField] GameObject hole;
-    
+    [SerializeField] Vector2 tempClickpunt;
+
     // Update is called once per frame
     void Update()
     {
@@ -25,6 +26,7 @@ public class Aarde : MonoBehaviour
             {
                 if (touch.phase == TouchPhase.Began)
                 {
+                    tempClickpunt = touch.position;
                     Debug.Log("aarde is geklikt");
 
                     if (holdsShuffol && dirtHasSeed == false)
@@ -43,8 +45,20 @@ public class Aarde : MonoBehaviour
                     }
                     else if (holdsShuffol && dirtHasSeed == true)
                     {
-                        Debug.Log("gat is dicht is dicht");
-                        hole.SetActive(true);
+                       /* Debug.Log("gat is dicht is dicht");
+                        hole.SetActive(true);*/
+                    }
+                }
+
+                if (touch.phase == TouchPhase.Moved)
+                {
+                    if (holdsShuffol && dirtHasSeed == true)
+                    {
+                        if (Vector2.Distance(tempClickpunt,touch.position) > 15) 
+                        {
+                            Debug.Log("gat is dicht is dicht");
+                            hole.SetActive(true);
+                        }
                     }
                 }
             }
