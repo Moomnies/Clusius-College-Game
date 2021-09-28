@@ -15,11 +15,11 @@ public class Player : MonoBehaviour
             RaycastHit hit;
             Ray ray = _Camera.ScreenPointToRay(pointClickedOnScreen);
 
-            if (Physics.Raycast(ray, out hit) && hit.collider.GetComponent<PlantManager>())
+            if (Physics.Raycast(ray, out hit) && hit.collider.GetComponent<PlantStateMachine>())
             {
                 if (touch.phase == TouchPhase.Began)
                 {
-                    FarmManager.ThisPlantIsTouched(hit.collider.GetComponent<PlantManager>().GetID);
+                    FarmManager.ThisPlantIsTouched(hit.collider.GetComponent<PlantStateMachine>().GetID);
                 }
             }
         }      

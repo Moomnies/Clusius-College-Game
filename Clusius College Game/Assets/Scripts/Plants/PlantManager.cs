@@ -25,7 +25,7 @@ public class PlantManager : MonoBehaviour
     private void Awake()
     {
         _PlantID = Guid.NewGuid().ToString();
-        FarmManager.AddMeToManager(this);
+        //FarmManager.AddMeToManager(this);
 
         _TimerScript.onTimerRunOut += NextPlantPhase;
         _PlantScript.onHarvestReady += PlantIsReadyForHarvest;

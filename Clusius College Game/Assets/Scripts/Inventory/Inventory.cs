@@ -1,10 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Inventory", menuName = "Inventory")]
-public class Inventory : ScriptableSingleton<Inventory>
+public class Inventory : MonoBehaviour
 {
-    List<Item> _ItemsInInventory = new List<Item>();
+    private static List<Item> _ItemsInInventory = new List<Item>();
+
+    public static List<Item> GetAllItemsInInventory { get => _ItemsInInventory;}
+
+    public static void AddItemToInventory(Item item) => _ItemsInInventory.Add(item);
+    
 }

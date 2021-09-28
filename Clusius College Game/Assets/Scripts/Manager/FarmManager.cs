@@ -1,27 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class FarmManager
 {
-    private static Dictionary<string, PlantManager> _PlantInScene = new Dictionary<string, PlantManager>();
-    private static string _SelectedPlanted;
+    public static event Action<dynamic> SelectAPlant;
+    
+    private static Dictionary<string, PlantStateMachine> _PlantInScene = new Dictionary<string, PlantStateMachine>();
 
-    public static void AddMeToManager(PlantManager plantToAdd)
+    public static void PlantAPlant(string plantID) => SelectAPlant(plantID);
+    public static void PlantIsSelected(string plantID, Plant selectedPlant)
     {
-        if (plantToAdd.GetComponent<PlantManager>() && plantToAdd.GetID != null)
+        if (plantID != null && selectedPlant != null)
+        {
+            _PlantInScene[plantID].Plant = selectedPlant;
+        }
+        else { Debug.LogFormat("FARMMANAGER.SELECTEDPLANT(): Something is null! PlantID: {0}, SelectedPlant: {1}.", plantID, selectedPlant); }
+    }
+
+    public static void AddMeToManager(PlantStateMachine plantToAdd)
+    {
+        if (plantToAdd.GetComponent<PlantStateMachine>() && plantToAdd.GetID != null)
         {
             _PlantInScene.Add(plantToAdd.GetID, plantToAdd);
+            Debug.Log("ADDED PLANT: " + plantToAdd.GetID);
         }
         else { Debug.LogFormat("Tried to add {0} to PlantsInSceneArray while this is not a plant", plantToAdd.name); }
-    }
+    }  
 
-    public static void PlantAPlant(Plant plantThatsPlanted)
-    {
-        _PlantInScene[_SelectedPlanted].Plant = plantThatsPlanted;
-    }
     public static void ThisPlantIsTouched(string plantID)
     {
         _PlantInScene[plantID].ExecuteBehaviourOnClick();
-    }
+    }     
+ 
+    public static void OpenPlantInformation(string plantID)
+    {
+        //Open Plant Information UI
+        //Set UI Transform to Plant Position
+    }    
 }

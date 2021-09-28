@@ -9,12 +9,35 @@ public class GameManager : MonoBehaviour
     [SerializeField] [Tooltip("Reference to the Player Settings Menu.")]
     GameObject _PlayerSettingsMenu;
 
+    private void Start()
+    {
+        FarmManager.SelectAPlant += PlayerIsSelectingPlant;
+    }
+
     public void OpenInventory()
     {
         if(_InventoryMenu != null && !_InventoryMenu.activeSelf)
         {
             _InventoryMenu.SetActive(true);          
         }
+    }
+    
+    public void PlayerIsSelectingPlant(dynamic plantID)
+    {
+        dynamic plant = plantID;
+
+        StartCoroutine(WaitTillPlantIsSelected());
+
+        IEnumerator WaitTillPlantIsSelected()
+        {
+            Plant plantedPlant = null;
+
+            OpenInventory();         
+
+            yield return new WaitUntil(() => plantedPlant != null);
+
+            FarmManager.PlantIsSelected(plantID, plantedPlant);
+        }        
     }
 
     public void CloseInventoryMenu()
@@ -41,4 +64,5 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    
 }
