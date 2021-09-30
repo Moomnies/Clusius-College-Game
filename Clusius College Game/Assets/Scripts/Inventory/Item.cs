@@ -14,6 +14,11 @@ public class Item : ScriptableObject
     string _ItemDiscription;
     [SerializeField] [Tooltip("Icon that item will be displayed with in Inventory")] 
     Sprite _ItemIcon;
+    [SerializeField]
+    Sprite _ItemBorder;
     [SerializeField] [Tooltip("Can one slot hold Mutiple Items or just one. Should be False if item is a tool")] 
     protected bool _Stackable;
+
+    public Sprite ItemBorder { get => _ItemBorder; }
+    public Sprite ItemIcon { get => _ItemIcon;}
 }

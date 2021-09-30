@@ -22,7 +22,7 @@ public class BeingPlanted : MonoBehaviour, IState
 
     public void OnEnter()
     {
-        plantID = plantReference.GetID;
+        plantID = plantReference.GetID;        
     }
 
     public void Tick()

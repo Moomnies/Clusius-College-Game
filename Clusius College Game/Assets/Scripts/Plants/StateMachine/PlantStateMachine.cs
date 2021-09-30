@@ -17,6 +17,7 @@ public class PlantStateMachine : MonoBehaviour
 
     [Header("DEBUG MODE")]
     [SerializeField]bool debugMode;
+    [SerializeField] Item itemToAdd;
 
 
     public string GetID { get => plantID; }
@@ -45,7 +46,9 @@ public class PlantStateMachine : MonoBehaviour
     private void Start()
     {
         plantID = Guid.NewGuid().ToString();
-        FarmManager.AddMeToManager(this);        
+        FarmManager.AddMeToManager(this);
+
+        Inventory.AddItemToInventory(itemToAdd);      
     }
 
     public void ExecuteBehaviourOnClick() => _StateMachine.Tick();
