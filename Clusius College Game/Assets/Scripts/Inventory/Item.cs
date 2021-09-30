@@ -18,7 +18,11 @@ public class Item : ScriptableObject
     Sprite _ItemBorder;
     [SerializeField] [Tooltip("Can one slot hold Mutiple Items or just one. Should be False if item is a tool")] 
     protected bool _Stackable;
+    [SerializeField]
+    int amountInPlayerInventory;
 
     public Sprite ItemBorder { get => _ItemBorder; }
     public Sprite ItemIcon { get => _ItemIcon;}
+    public string ItemID { get => _ItemID; }
+    public int AmountInPlayerInventory { get => amountInPlayerInventory; set => amountInPlayerInventory = value; }
 }

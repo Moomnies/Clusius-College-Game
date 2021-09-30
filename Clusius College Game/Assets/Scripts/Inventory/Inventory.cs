@@ -5,17 +5,29 @@ using UnityEditor;
 using UnityEngine;
 
 
-public static class Inventory
+namespace Inventory
 {
-    public static event Action ItemAddedToInventory;
+    public static class Inventory
+    {
+        public static event Action ItemAddedToInventory;
 
-    private static List<Item> _ItemsInInventory = new List<Item>();
+        private static Dictionary<string, Item> _ItemsInInventory = new Dictionary<string, Item>();
 
-    public static List<Item> GetAllItemsInInventory { get => _ItemsInInventory;}
+        private static List<Item> allItems = new List<Item>();
 
-    public static void AddItemToInventory(Item item)
-    {        
-        _ItemsInInventory.Add(item);
-        ItemAddedToInventory();
-    }    
+        public static Dictionary<string, Item> GetAllItemsInInventory { get => _ItemsInInventory; }
+        public static List<Item> GetAllItems { get => allItems; }
+
+        public static void AddItemToInventory(Item item)
+        {
+            if (_ItemsInInventory.ContainsValue(item))
+            {
+                _ItemsInInventory[item.ItemID].AmountInPlayerInventory += 1;
+            }
+            else { _ItemsInInventory.Add(item.ItemID, item); }            
+
+            ItemAddedToInventory();
+        }
+    }
+
 }

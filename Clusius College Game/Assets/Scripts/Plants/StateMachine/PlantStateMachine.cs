@@ -46,9 +46,7 @@ public class PlantStateMachine : MonoBehaviour
     private void Start()
     {
         plantID = Guid.NewGuid().ToString();
-        FarmManager.AddMeToManager(this);
-
-        Inventory.AddItemToInventory(itemToAdd);      
+        FarmManager.AddMeToManager(this);            
     }
 
     public void ExecuteBehaviourOnClick() => _StateMachine.Tick();
