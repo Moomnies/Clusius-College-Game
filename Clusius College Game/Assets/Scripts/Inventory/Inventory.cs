@@ -4,19 +4,22 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-
 namespace Inventory
 {
     public class Inventory : MonoBehaviour
     {
-        public static event Action inventoryUpdated;
+        public event Action inventoryUpdated;
 
         [SerializeField] int inventorySize = 24;
 
         Item[] slots;     
-        public int GetSize { get => slots.Length; }
+        public int GetSize { get => slots.Length; }       
+        public static Inventory GetPlayerInventory()
+        {
+            var player = GameObject.FindWithTag("Player");
+            return player.GetComponent<Inventory>();
+        }
 
-        //PUBLIC
         public bool AddToFirstEmptySlot(Item itemToAdd)
         {
             int i = FindSlot(itemToAdd);
@@ -78,11 +81,11 @@ namespace Inventory
             return true;
         }
       
-
         //PRIVATE
         private void Awake()
         {
             slots = new Item[inventorySize];
+            slots[1] = Item.GetFromID("5d158303-0d62-458f-8c15-ddf689c6581d");
         }
 
         private int FindSlot(Item itemToAdd)
@@ -102,8 +105,5 @@ namespace Inventory
 
             return -1;
         }
-
-
     }
-
 }

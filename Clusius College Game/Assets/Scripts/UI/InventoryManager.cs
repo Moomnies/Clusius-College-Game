@@ -3,70 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Inventory.UI
+namespace Inventory
 {
     public class InventoryManager : MonoBehaviour
-    {
-        [SerializeField]
-        [Tooltip("Reference to the Inventory UI.")]
-        GameObject _InventoryMenu;
+    {        
         [SerializeField]
         Transform _ContentFieldInventory;
+        [SerializeField]
+        Inventory playerInventory;
 
         [Header("Prefabs")]
         [SerializeField]
-        GameObject _ItemPrefab;
+        InventorySlot itemPrefab = null;
+               
+        private void Awake()
+        {
+            if(playerInventory == null)
+            {
+                playerInventory = Inventory.GetPlayerInventory();
+                playerInventory.inventoryUpdated += Redraw;
+            }
+        }
 
         private void Start()
         {
-            FarmManager.SelectAPlant += PlayerIsSelectingPlant;
-            Inventory.inventoryUpdated += UpdateInventory;
-        }
+            Redraw();
+        }       
 
-        public void OpenInventory()
+        //PRIVATE
+        private void Redraw()
         {
-            if (_InventoryMenu != null && !_InventoryMenu.activeSelf)
+            foreach (Transform child in transform)
             {
-                _InventoryMenu.SetActive(true);
+                Destroy(child.gameObject);
             }
-        }
 
-        void UpdateInventory()
-        {
-            foreach (Item item in Inventory.GetAllItems)
+            for (int i = 0; i < playerInventory.GetSize; i++)
             {
-                GameObject choiceInstane = Instantiate(_ItemPrefab, _ContentFieldInventory);
-
-                choiceInstane.GetComponent<Image>().sprite = item.ItemBorder;
-                GameObject child = choiceInstane.transform.GetChild(0).gameObject;
-                child.GetComponent<Image>().sprite = item.ItemIcon;
+                var itemUI = Instantiate(itemPrefab, transform);
+                itemUI.Setup(playerInventory, i);
             }
-        }
-
-        public void PlayerIsSelectingPlant(dynamic plantID)
-        {
-            dynamic plant = plantID;
-
-            StartCoroutine(WaitTillPlantIsSelected());
-
-            IEnumerator WaitTillPlantIsSelected()
-            {
-                Plant plantedPlant = null;
-
-                OpenInventory();
-
-                yield return new WaitUntil(() => plantedPlant != null);
-
-                FarmManager.PlantIsSelected(plantID, plantedPlant);
-            }
-        }
-
-        public void CloseInventoryMenu()
-        {
-            if (_InventoryMenu != null && _InventoryMenu.activeSelf)
-            {
-                _InventoryMenu.SetActive(false);
-            }
-        }
+        }        
     }
 }
