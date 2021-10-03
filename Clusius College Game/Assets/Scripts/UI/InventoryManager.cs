@@ -20,7 +20,7 @@ namespace Inventory.UI
         private void Start()
         {
             FarmManager.SelectAPlant += PlayerIsSelectingPlant;
-            Inventory.ItemAddedToInventory += UpdateInventory;
+            Inventory.inventoryUpdated += UpdateInventory;
         }
 
         public void OpenInventory()
