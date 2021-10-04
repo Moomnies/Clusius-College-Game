@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Growing : MonoBehaviour, IState
 {
+
+    bool plantIsGrown = false;
+
+    public bool isPlantGrown { get => plantIsGrown; }
+
     public Growing()
     {
 
@@ -11,16 +16,16 @@ public class Growing : MonoBehaviour, IState
 
     public void OnEnter()
     {
-        throw new System.NotImplementedException();
+        plantIsGrown = true;
     }
 
     public void OnExit()
     {
-        throw new System.NotImplementedException();
+        plantIsGrown = false;
     }
 
     public void Tick()
     {
-        throw new System.NotImplementedException();
+        
     }
 }

@@ -31,14 +31,18 @@ public class PlantStateMachine : MonoBehaviour
         var digging = new Digging(meshFilter);
         var beingPlanted = new BeingPlanted(meshFilter, seedSpawn, this);
         var growing = new Growing();
+        var harvesting = new Harvesting(this);
 
         void At(IState to, IState from, Func<bool> condition) => _StateMachine.AddTransition(to, from, condition);
 
         At(digging, beingPlanted, HoleIsDug());
         At(beingPlanted, growing, SeedIsPlanted());
+        At(growing, harvesting, plantIsGrown());
 
         Func<bool> HoleIsDug() => () => digging.IsHoleDug;
         Func<bool> SeedIsPlanted() => () => beingPlanted.IsPlantPlanted;
+        Func<bool> plantIsGrown() => () => growing.isPlantGrown;
+        Func<bool> plantIsHarvested() => () => harvesting.isPlantHarvested;
 
         _StateMachine.SetState(digging);        
     }
