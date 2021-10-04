@@ -3,16 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Saving;
 
 namespace Inventory
 {
-    public class Inventory : MonoBehaviour
+    public class Inventory : MonoBehaviour, ISaveable
     {
         public event Action inventoryUpdated;
 
+        [SerializeField] Item testItem;
+
         [SerializeField] int inventorySize = 24;
 
-        Item[] slots;     
+        [SerializeField] Item[] slots;     
         public int GetSize { get => slots.Length; }       
         public static Inventory GetPlayerInventory()
         {
@@ -22,19 +25,21 @@ namespace Inventory
 
         public bool AddToFirstEmptySlot(Item itemToAdd)
         {
+            Debug.Log(itemToAdd.name);
             int i = FindSlot(itemToAdd);
 
             if(i < 0)
             {
-                return false;
+                return false;                
             }
 
             slots[i] = itemToAdd;
             if(inventoryUpdated != null)
             {
-                inventoryUpdated();
+                inventoryUpdated();               
             }
 
+            
             return true;
         }
         
@@ -85,8 +90,8 @@ namespace Inventory
         private void Awake()
         {
             slots = new Item[inventorySize];
-            slots[1] = Item.GetFromID("5d158303-0d62-458f-8c15-ddf689c6581d");
-        }
+            AddToFirstEmptySlot(testItem);
+        }       
 
         private int FindSlot(Item itemToAdd)
         {
@@ -96,14 +101,41 @@ namespace Inventory
         private int FindEmptySlot()
         {
             for (int i = 0; i < slots.Length; i++)
-            {
-                if(slots[i] = null)
+            {               
+                if(slots[i] == null)
                 {
                     return i; 
                 }
             }
 
             return -1;
+        }
+
+        object ISaveable.CaptureState()
+        {
+            var slotStrings = new string[inventorySize];
+            for (int i = 0; i < inventorySize; i++)
+            {
+                if(slots[i] != null)
+                {
+                    slotStrings[i] = slots[i].ItemID;
+                }
+            }
+
+            return slotStrings;            
+        }
+
+        void ISaveable.RestoreState(object state)
+        {
+            var slotStrings = (string[])state;
+            for (int i = 0; i < inventorySize; i++)
+            {
+                slots[i] = Item.GetFromID(slotStrings[i]);
+            }
+            if(inventoryUpdated != null)
+            {
+                inventoryUpdated();
+            }
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Inventory
             return itemLookupCache[itemID];
         }
 
-        //Private Methods   
+        //PRIVATE  
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {
             
