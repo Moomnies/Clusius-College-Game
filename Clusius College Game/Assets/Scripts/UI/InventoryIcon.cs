@@ -13,9 +13,11 @@ namespace Inventory
             if (item == null)
             {
                 iconImage.enabled = false;
+                transform.parent.GetComponent<Button>().enabled = false;
             }
             else
             {
+                transform.parent.GetComponent<Button>().enabled = true;
                 iconImage.enabled = true;
                 iconImage.sprite = item.ItemIcon;
                 transform.parent.GetComponent<Image>().sprite = item.ItemBorder;

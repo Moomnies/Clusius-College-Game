@@ -29,9 +29,7 @@ public class BeingPlanted : MonoBehaviour, IState
     {
         isPlantPlanted = true;
     
-        FarmManager.PlantAPlant(plantID);
-
-        //seedSpawn.SetActive(true);            
+        FarmManager.PlantAPlant(plantID);                   
     }
 
     public void OnExit()

@@ -12,12 +12,15 @@ namespace Inventory
 
         int index;        
         Inventory inventory;
+        GameManager gameManager;
+        Button button;
 
-        public void Setup(Inventory inventory, int index)
+        public void Setup(Inventory inventory, int index, GameManager gameManager)
         {
+            this.gameManager = gameManager;
             this.inventory = inventory;
             this.index = index;            
-            icon.SetItem(inventory.GetItemInSlot(index));            
+            icon.SetItem(inventory.GetItemInSlot(index));  
         }
     }
 }

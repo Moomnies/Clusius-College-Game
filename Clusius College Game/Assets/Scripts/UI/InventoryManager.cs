@@ -11,6 +11,8 @@ namespace Inventory
         Transform _ContentFieldInventory;
         [SerializeField]
         Inventory playerInventory;
+        [SerializeField]
+        GameManager gameManager;
 
         [Header("Prefabs")]
         [SerializeField]
@@ -41,7 +43,7 @@ namespace Inventory
             for (int i = 0; i < playerInventory.GetSize; i++)
             {
                 var itemUI = Instantiate(itemPrefab, transform);
-                itemUI.Setup(playerInventory, i);
+                itemUI.Setup(playerInventory, i, gameManager);
             }
         }        
     }

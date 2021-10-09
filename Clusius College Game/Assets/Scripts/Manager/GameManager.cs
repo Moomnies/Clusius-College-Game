@@ -11,6 +11,11 @@ public class GameManager : MonoBehaviour
     [Tooltip("Reference to the Inventory UI.")]
     GameObject _InventoryMenu;
 
+    private void Awake()
+    {
+        FarmManager.SelectAPlant += PlayerIsChoosingPlant;
+    }
+
     public void OpenPlayerSettings()
     {
         if (_PlayerSettingsMenu != null && !_PlayerSettingsMenu.activeSelf)
@@ -26,6 +31,7 @@ public class GameManager : MonoBehaviour
             _PlayerSettingsMenu.SetActive(false);
         }
     }
+
     public void OpenInventory()
     {
         if (_InventoryMenu != null && !_InventoryMenu.activeSelf)
@@ -39,6 +45,29 @@ public class GameManager : MonoBehaviour
         if (_InventoryMenu != null && _InventoryMenu.activeSelf)
         {
             _InventoryMenu.SetActive(false);
+        }
+    }
+
+    public void PlayerIsChoosingPlant(dynamic plantID)
+    {
+        if (_PlayerSettingsMenu != null && !_PlayerSettingsMenu.activeSelf)
+        {
+            _PlayerSettingsMenu.SetActive(true);
+        }
+
+        dynamic plant = plantID;
+
+        StartCoroutine(WaitTillPlantIsSelected());
+
+        IEnumerator WaitTillPlantIsSelected()
+        {
+            Plant plantedPlant = null;
+
+            OpenInventory();
+
+            yield return new WaitUntil(() => plantedPlant != null);
+
+            FarmManager.PlantIsSelected(plantID, plantedPlant);
         }
     }
 }

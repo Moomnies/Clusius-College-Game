@@ -24,8 +24,7 @@ namespace Inventory
         }
 
         public bool AddToFirstEmptySlot(Item itemToAdd)
-        {
-            Debug.Log(itemToAdd.name);
+        {           
             int i = FindSlot(itemToAdd);
 
             if(i < 0)
