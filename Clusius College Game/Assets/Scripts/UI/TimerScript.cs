@@ -32,8 +32,7 @@ public class TimerScript : MonoBehaviour
             DisplayTime(_CurrentTimer);
         }
         else if (_TimerIsRunning && _CurrentTimer <= -.1)
-        {
-            //Set Off Event in Plant Script
+        {            
             onTimerRunOut();            
         }
     }   
@@ -41,8 +40,7 @@ public class TimerScript : MonoBehaviour
     public void ToggleOnOffTimmer()
     {
         _IsTimerOn = !_IsTimerOn;
-        this.gameObject.SetActive(_IsTimerOn);
-        Debug.Log("timer");
+        this.gameObject.SetActive(_IsTimerOn);       
 
         if (_IsTimerOn)
         {          

@@ -46,9 +46,7 @@ namespace Inventory
             }
             
             this.item = item;          
-        }
-
-        //PRIVATE
+        }      
         private void Redraw()
         {
             foreach (Transform child in transform)

@@ -16,7 +16,7 @@ public static class FarmManager
         {
             PlayerNeedToSelectAPlant(plantID);
         }
-        else { Debug.LogFormat("FARMMANAGER PLAYERNEEDSTOSELECTPLANT(): Something is null! PlantID: {0}", plantID); }
+        else { Debug.LogFormat("FARMMANAGER.PLAYERNEEDSTOSELECTPLANT(): Something is null! PlantID: {0}", plantID); }
     }
 
     public static void PlantIsSelected(string plantID, Seed selectedPlant)
@@ -43,6 +43,10 @@ public static class FarmManager
 
     public static void ThisPlantIsTouched(string plantID)
     {
-        _PlantInScene[plantID].ExecuteBehaviourOnClick();
+        if (plantID != null && _PlantInScene.ContainsKey(plantID))
+        {
+            _PlantInScene[plantID].ExecuteBehaviourOnClick();
+        }
+        else { Debug.LogFormat("FARMMANAGER.THISPLANTISTOUCHED: PlantID is null or PlantID isn't found in Dictionary! PlantID: {0}", plantID); }
     }        
 }

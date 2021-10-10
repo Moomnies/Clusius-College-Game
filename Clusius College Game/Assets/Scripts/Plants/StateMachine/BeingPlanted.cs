@@ -33,12 +33,12 @@ public class BeingPlanted : MonoBehaviour, IState
 
     public void Tick()
     {
-          
+        return;
     }
 
     public void OnExit()
     {
-        //isPlantPlanted = false;       
+           
     }
 
    

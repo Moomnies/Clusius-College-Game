@@ -32,15 +32,18 @@ public class PlantStateMachine : MonoBehaviour
 
         var digging = new Digging(meshFilter);
         var beingPlanted = new BeingPlanted(meshFilter, seedSpawn, this);
-        var growing = new Growing(this, timer);
+        var growing = new Growing(this, timer, meshFilter);
+        var harvestingB = new HarvestingBehaviour();
 
         void At(IState to, IState from, Func<bool> condition) => _StateMachine.AddTransition(to, from, condition);
 
         At(digging, beingPlanted, HoleIsDug());
         At(beingPlanted, growing, SeedIsPlanted());
+        At(growing, harvestingB, SeedIsDoneGrowing());
 
         Func<bool> HoleIsDug() => () => digging.IsHoleDug;
         Func<bool> SeedIsPlanted() => () => _PlantedSeed != null;
+        Func<bool> SeedIsDoneGrowing() => () => growing.PlantIsDoneGrowing;
 
         _StateMachine.SetState(digging);        
     }
