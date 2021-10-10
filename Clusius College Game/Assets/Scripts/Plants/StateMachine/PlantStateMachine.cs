@@ -14,8 +14,8 @@ public class PlantStateMachine : MonoBehaviour
     [Header("Assign First Please")]
     [SerializeField] MeshFilter meshFilter;
     [SerializeField] GameObject seedSpawn;
-    [SerializeField] Seed _PlantedSeed;
-    [SerializeField] TimerScript timer;
+    [SerializeField] Seed _PlantedSeed = null;
+    [SerializeField] public TimerScript timer;
 
     [Header("DEBUG MODE")]
     [SerializeField] bool debugMode;
@@ -40,7 +40,7 @@ public class PlantStateMachine : MonoBehaviour
         At(beingPlanted, growing, SeedIsPlanted());
 
         Func<bool> HoleIsDug() => () => digging.IsHoleDug;
-        Func<bool> SeedIsPlanted() => () => beingPlanted.IsPlantPlanted;
+        Func<bool> SeedIsPlanted() => () => _PlantedSeed != null;
 
         _StateMachine.SetState(digging);        
     }

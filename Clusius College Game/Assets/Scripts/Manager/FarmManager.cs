@@ -16,14 +16,17 @@ public static class FarmManager
         {
             PlayerNeedToSelectAPlant(plantID);
         }
+        else { Debug.LogFormat("FARMMANAGER PLAYERNEEDSTOSELECTPLANT(): Something is null! PlantID: {0}", plantID); }
     }
 
     public static void PlantIsSelected(string plantID, Seed selectedPlant)
-    {
+    {     
         if (plantID != null && selectedPlant != null)
-        {
-            Debug.Log("Planting:" + selectedPlant);
+        {           
             _PlantInScene[plantID].PlantedSeed = selectedPlant;
+
+            //Execute StateMachine Tick so Behaviour is Switched to Growing. Needs to be done here because PlayerNeedToSelectAPlant is an Event. 
+            _PlantInScene[plantID].ExecuteBehaviourOnClick();
         }
         else { Debug.LogFormat("FARMMANAGER.SELECTEDPLANT(): Something is null! PlantID: {0}, SelectedPlant: {1}.", plantID, selectedPlant); }
     }
@@ -35,7 +38,7 @@ public static class FarmManager
             _PlantInScene.Add(plantToAdd.GetID, plantToAdd);
             Debug.Log("ADDED PLANT: " + plantToAdd.GetID);
         }
-        else { Debug.LogFormat("Tried to add {0} to PlantsInSceneArray while this is not a plant", plantToAdd.name); }
+        else { Debug.LogFormat("FARMMANAGER.ADDMETOMANAGER(): Tried to add {0} to PlantsInSceneArray while this is not a plant", plantToAdd.name); }
     }  
 
     public static void ThisPlantIsTouched(string plantID)

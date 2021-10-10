@@ -18,8 +18,13 @@ public class Growing : MonoBehaviour, IState
     public void OnEnter()
     {
         seedPlanted = plantState.PlantedSeed;
-        timer.SetTimerValue(seedPlanted.TimeToGrow);
-        timer.ToggleOnOffTimmer();
+
+        if (timer != null)
+        {
+            timer.SetTimerValue(seedPlanted.TimeToGrow);
+            timer.ToggleOnOffTimmer();
+        }
+        else { Debug.LogFormat("GROWING.TICK(): Timer is null! Timer: {0} In Plant: {1}", timer, plantState.GetID); }
     }
 
     public void OnExit()

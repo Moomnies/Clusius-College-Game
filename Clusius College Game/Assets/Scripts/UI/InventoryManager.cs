@@ -23,13 +23,7 @@ namespace Inventory
         Item item;
         Seed itemToPlant;
 
-        bool playerIsChoosing = false;
-               
-        private void Awake()
-        {
-            
-        }
-
+        bool playerIsChoosing = false;              
         private void Start()
         {
             Redraw();
@@ -47,13 +41,11 @@ namespace Inventory
         {
             if (playerIsChoosing && item is Seed)
             {
-                itemToPlant = item as Seed;
-                Debug.Log(itemToPlant);
+                itemToPlant = item as Seed;                
                 return;
             }
             
-            this.item = item;
-            Debug.Log(item);
+            this.item = item;          
         }
 
         //PRIVATE
@@ -72,17 +64,15 @@ namespace Inventory
         }
 
         void PlayerIsSelectingAPlant(string plantID)
-        {
-            Debug.Log("In Player is Choosing");
+        {           
             playerIsChoosing = true;
+
             UIToggle.ToggleUIComponent();
 
             StartCoroutine(WaitTillPlantIsSelected());
 
             IEnumerator WaitTillPlantIsSelected()
-            {
-                Debug.Log("Running Coroutine");
-
+            {                
                 yield return new WaitUntil(() => itemToPlant != null);
                 UIToggle.ToggleUIComponent();   
                 FarmManager.PlantIsSelected(plantID, itemToPlant);
