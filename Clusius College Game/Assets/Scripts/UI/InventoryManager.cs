@@ -12,25 +12,49 @@ namespace Inventory
         [SerializeField]
         Inventory playerInventory;
         [SerializeField]
-        GameManager gameManager;
-
+        GameObject inventory;       
+      
         [Header("Prefabs")]
         [SerializeField]
         InventorySlot itemPrefab = null;
+        [SerializeField]
+        OpenUIComponent UIToggle;
+
+        Item item;
+        Seed itemToPlant;
+
+        bool playerIsChoosing = false;
                
         private void Awake()
         {
-            if(playerInventory == null)
-            {
-                playerInventory = Inventory.GetPlayerInventory();
-                playerInventory.inventoryUpdated += Redraw;
-            }
+            
         }
 
         private void Start()
         {
             Redraw();
-        }       
+
+            FarmManager.PlayerNeedToSelectAPlant += PlayerIsSelectingAPlant;
+
+            if (playerInventory == null)
+            {
+                playerInventory = Inventory.GetPlayerInventory();
+                playerInventory.inventoryUpdated += Redraw;                
+            }
+        }  
+        
+        public void ItemSelected(Item item)
+        {
+            if (playerIsChoosing && item is Seed)
+            {
+                itemToPlant = item as Seed;
+                Debug.Log(itemToPlant);
+                return;
+            }
+            
+            this.item = item;
+            Debug.Log(item);
+        }
 
         //PRIVATE
         private void Redraw()
@@ -43,8 +67,26 @@ namespace Inventory
             for (int i = 0; i < playerInventory.GetSize; i++)
             {
                 var itemUI = Instantiate(itemPrefab, transform);
-                itemUI.Setup(playerInventory, i, gameManager);
+                itemUI.Setup(playerInventory, i, this);
             }
-        }        
+        }
+
+        void PlayerIsSelectingAPlant(string plantID)
+        {
+            Debug.Log("In Player is Choosing");
+            playerIsChoosing = true;
+            UIToggle.ToggleUIComponent();
+
+            StartCoroutine(WaitTillPlantIsSelected());
+
+            IEnumerator WaitTillPlantIsSelected()
+            {
+                Debug.Log("Running Coroutine");
+
+                yield return new WaitUntil(() => itemToPlant != null);
+                UIToggle.ToggleUIComponent();   
+                FarmManager.PlantIsSelected(plantID, itemToPlant);
+            }
+        }
     }
 }

@@ -2,19 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Inventory;
 
 public static class FarmManager
-{
-    public static event Action<dynamic> SelectAPlant;
+{    
+    public static event Action<string> PlayerNeedToSelectAPlant;
     
     private static Dictionary<string, PlantStateMachine> _PlantInScene = new Dictionary<string, PlantStateMachine>();
 
-    public static void PlantAPlant(string plantID) => SelectAPlant(plantID);
-    public static void PlantIsSelected(string plantID, Plant selectedPlant)
+    public static void PlayerNeedsToSelectPlant(string plantID)
+    {
+        if (plantID != null && PlayerNeedToSelectAPlant != null)
+        {
+            PlayerNeedToSelectAPlant(plantID);
+        }
+    }
+
+    public static void PlantIsSelected(string plantID, Seed selectedPlant)
     {
         if (plantID != null && selectedPlant != null)
         {
-            _PlantInScene[plantID].Plant = selectedPlant;
+            Debug.Log("Planting:" + selectedPlant);
+            _PlantInScene[plantID].PlantedSeed = selectedPlant;
         }
         else { Debug.LogFormat("FARMMANAGER.SELECTEDPLANT(): Something is null! PlantID: {0}, SelectedPlant: {1}.", plantID, selectedPlant); }
     }
@@ -32,11 +41,5 @@ public static class FarmManager
     public static void ThisPlantIsTouched(string plantID)
     {
         _PlantInScene[plantID].ExecuteBehaviourOnClick();
-    }     
- 
-    public static void OpenPlantInformation(string plantID)
-    {
-        //Open Plant Information UI
-        //Set UI Transform to Plant Position
-    }    
+    }        
 }

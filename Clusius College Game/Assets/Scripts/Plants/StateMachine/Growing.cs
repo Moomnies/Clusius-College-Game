@@ -1,17 +1,25 @@
+using Inventory;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Growing : MonoBehaviour, IState
 {
-    public Growing()
-    {
+    Seed seedPlanted;
+    PlantStateMachine plantState;
+    TimerScript timer;
 
+    public Growing(PlantStateMachine plantStateMachine, TimerScript timer)
+    {
+        plantState = plantStateMachine;
+        this.timer = timer;
     }
 
     public void OnEnter()
     {
-        throw new System.NotImplementedException();
+        seedPlanted = plantState.PlantedSeed;
+        timer.SetTimerValue(seedPlanted.TimeToGrow);
+        timer.ToggleOnOffTimmer();
     }
 
     public void OnExit()
@@ -21,6 +29,6 @@ public class Growing : MonoBehaviour, IState
 
     public void Tick()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 }

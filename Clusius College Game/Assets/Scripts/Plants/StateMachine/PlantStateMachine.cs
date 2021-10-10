@@ -14,16 +14,17 @@ public class PlantStateMachine : MonoBehaviour
     [Header("Assign First Please")]
     [SerializeField] MeshFilter meshFilter;
     [SerializeField] GameObject seedSpawn;
-    [SerializeField] Plant plant;
+    [SerializeField] Seed _PlantedSeed;
+    [SerializeField] TimerScript timer;
 
     [Header("DEBUG MODE")]
-    [SerializeField]bool debugMode;
+    [SerializeField] bool debugMode;
     [SerializeField] Item itemToAdd;
 
 
     public string GetID { get => plantID; }
     public IState currentPlantState { get => _StateMachine.GetCurrentState(); }
-    public Plant Plant { get => plant; set => plant = value; }
+    public Seed PlantedSeed { get => _PlantedSeed; set => _PlantedSeed = value; }
 
     private void Awake()
     {       
@@ -31,7 +32,7 @@ public class PlantStateMachine : MonoBehaviour
 
         var digging = new Digging(meshFilter);
         var beingPlanted = new BeingPlanted(meshFilter, seedSpawn, this);
-        var growing = new Growing();
+        var growing = new Growing(this, timer);
 
         void At(IState to, IState from, Func<bool> condition) => _StateMachine.AddTransition(to, from, condition);
 
@@ -47,7 +48,7 @@ public class PlantStateMachine : MonoBehaviour
     private void Start()
     {
         plantID = Guid.NewGuid().ToString();
-        FarmManager.AddMeToManager(this);            
+        FarmManager.AddMeToManager(this);
     }
 
     public void ExecuteBehaviourOnClick() => _StateMachine.Tick();

@@ -17,10 +17,8 @@ public class OpenUIComponent : MonoBehaviour
         button.onClick.AddListener(ToggleUIComponent);
     }
 
-    void ToggleUIComponent()
+    public void ToggleUIComponent()
     {
         _UIComponent.SetActive(!_UIComponent.activeSelf);
     }
-
-
 }

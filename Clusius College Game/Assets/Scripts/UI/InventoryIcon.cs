@@ -7,17 +7,17 @@ namespace Inventory
 {
     public class InventoryIcon : MonoBehaviour
     {     
-        public void SetItem(Item item)
+        public void SetItem(Item item, Button button)
         {
             var iconImage = GetComponent<Image>();
             if (item == null)
             {
                 iconImage.enabled = false;
-                transform.parent.GetComponent<Button>().enabled = false;
+                button.enabled = false;
             }
             else
             {
-                transform.parent.GetComponent<Button>().enabled = true;
+                button.enabled = true;
                 iconImage.enabled = true;
                 iconImage.sprite = item.ItemIcon;
                 transform.parent.GetComponent<Image>().sprite = item.ItemBorder;

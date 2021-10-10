@@ -18,24 +18,32 @@ public class BeingPlanted : MonoBehaviour, IState
         this.meshFilter = meshFilter;
         this.seedSpawn = seedObject;
         this.plantReference = plantReference;
+        
+        
     }
 
     public void OnEnter()
     {
-        plantID = plantReference.GetID;        
+        
     }
 
     public void Tick()
     {
-        isPlantPlanted = true;
-    
-        FarmManager.PlantAPlant(plantID);                   
+        plantID = plantReference.GetID;
+        Debug.Log(plantID);
+
+        if (plantID != null)
+        {
+            FarmManager.PlayerNeedsToSelectPlant(plantID);
+            isPlantPlanted = true;
+            plantReference.ExecuteBehaviourOnClick();
+        }        
     }
 
     public void OnExit()
     {
         isPlantPlanted = false;
-        seedSpawn.SetActive(false);
+        //seedSpawn.SetActive(false);
     }
 
    

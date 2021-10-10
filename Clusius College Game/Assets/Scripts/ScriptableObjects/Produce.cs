@@ -5,9 +5,9 @@ using UnityEngine;
 namespace Inventory
 {
     [CreateAssetMenu(fileName = "Produce", menuName = "InventoryItem/Produce")]
-    public class PlantProduce : Item
+    public class Produce : Item
     {
-
+        
     }
 }
 
