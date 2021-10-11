@@ -12,7 +12,9 @@ namespace Inventory
         [SerializeField]
         Inventory playerInventory;
         [SerializeField]
-        GameObject inventory;       
+        GameObject inventory;
+        [SerializeField]
+        GameObject inventoryUI;
       
         [Header("Prefabs")]
         [SerializeField]
@@ -62,20 +64,20 @@ namespace Inventory
         }
 
         void PlayerIsSelectingAPlant(string plantID)
-        {           
+        {            
             playerIsChoosing = true;
             itemToPlant = null;
 
-            UIToggle.ToggleUIComponent();
+            this.inventoryUI.SetActive(true);
 
             StartCoroutine(WaitTillPlantIsSelected());
 
             IEnumerator WaitTillPlantIsSelected()
-            {                
+            {
                 yield return new WaitUntil(() => itemToPlant != null);
-                UIToggle.ToggleUIComponent();   
+                this.inventoryUI.SetActive(false);
                 FarmManager.PlantIsSelected(plantID, itemToPlant);
-            }
+            }                                    
         }
     }
 }

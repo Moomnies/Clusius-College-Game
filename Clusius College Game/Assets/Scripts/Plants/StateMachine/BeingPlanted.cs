@@ -32,7 +32,10 @@ public class BeingPlanted : MonoBehaviour, IState
 
     public void Tick()
     {
-        return;
+        if(plantReference.PlantedSeed == null)
+        {
+            FarmManager.PlayerNeedsToSelectPlant(plantID);
+        }
     }
 
     public void OnExit()

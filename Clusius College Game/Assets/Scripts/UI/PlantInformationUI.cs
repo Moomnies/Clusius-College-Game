@@ -10,6 +10,7 @@ public class PlantInformationUI : MonoBehaviour
     [SerializeField] TMP_Text plantName;
 
     [SerializeField] Slider progessionSlider;
+    [SerializeField] AudioSource popSound;
 
     TimerScript plantTimer;
 
@@ -21,6 +22,7 @@ public class PlantInformationUI : MonoBehaviour
     public void SetPlantName(string plantName)
     {
         this.plantName.text = plantName;
+        popSound.Play();
     }
 
     // Start is called before the first frame update
@@ -31,11 +33,11 @@ public class PlantInformationUI : MonoBehaviour
 
     private void Update()
     {
-        if(plantTimer != null)
+        if (plantTimer != null && progessionSlider != null)
         {
             DisplayTime(plantTimer.GetCurrentTimer);
             progessionSlider.value = 1 - (plantTimer.GetCurrentTimer / plantTimer.GetTimeCount);            
-        }
+        }       
     }
 
     void DisplayTime(float timeToDisplay)
