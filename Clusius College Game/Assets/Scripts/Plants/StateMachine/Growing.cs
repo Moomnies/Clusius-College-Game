@@ -24,7 +24,8 @@ public class Growing : MonoBehaviour, IState
 
     public void OnEnter()
     {
-        seedPlanted = plantState.PlantedSeed;        
+        seedPlanted = plantState.PlantedSeed;
+        plantIsDoneGrowing = false;
 
         if (timer != null)
         {
@@ -55,7 +56,7 @@ public class Growing : MonoBehaviour, IState
 
     public void Tick()
     {
-        return;
+        FarmManager.ShowPlantData(plantState.GetID);
     }
 
     void NextPlantStage()

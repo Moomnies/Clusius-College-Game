@@ -2,13 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using Inventory;
 
 public static class FarmManager
 {    
-    public static event Action<string> PlayerNeedToSelectAPlant;
+    public static event Action<string> PlayerNeedToSelectAPlant;    
     
     private static Dictionary<string, PlantStateMachine> _PlantInScene = new Dictionary<string, PlantStateMachine>();
+
+    private static GameObject plantInformationUI;
+    
+    public static void AttachUIComponent(GameObject UIcomponent)
+    {
+        plantInformationUI = UIcomponent;
+    }
 
     public static void PlayerNeedsToSelectPlant(string plantID)
     {
@@ -44,9 +53,27 @@ public static class FarmManager
     public static void ThisPlantIsTouched(string plantID)
     {
         if (plantID != null && _PlantInScene.ContainsKey(plantID))
-        {
+        {           
             _PlantInScene[plantID].ExecuteBehaviourOnClick();
         }
         else { Debug.LogFormat("FARMMANAGER.THISPLANTISTOUCHED: PlantID is null or PlantID isn't found in Dictionary! PlantID: {0}", plantID); }
-    }        
+    }      
+    
+    public static void ShowPlantData(string plantID)
+    {
+        Debug.Log(plantID);
+
+        if (plantID != null && plantInformationUI != null)
+        {
+            PlantStateMachine currentPlant = _PlantInScene[plantID];
+
+            TMP_Text text =  plantInformationUI.transform.GetComponentInChildren<TMP_Text>();
+            text.text = currentPlant.PlantedSeed.TypeOfProduce.name;
+
+            plantInformationUI.transform.position = new Vector3(currentPlant.transform.position.x, 
+                currentPlant.transform.position.y + 175, currentPlant.transform.position.z);           
+
+        }
+        else { Debug.LogFormat("FARMMANAGER.SHOWPLANTDATA: Something is null! PlantID: {0}, UIComponent: {1}", plantID, plantInformationUI.name);    }
+    }
 }

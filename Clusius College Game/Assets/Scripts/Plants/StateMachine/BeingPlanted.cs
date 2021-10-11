@@ -13,10 +13,9 @@ public class BeingPlanted : MonoBehaviour, IState
 
     public bool IsPlantPlanted { get => isPlantPlanted; }
 
-    public BeingPlanted(MeshFilter meshFilter, GameObject seedObject, PlantStateMachine plantReference)
+    public BeingPlanted(MeshFilter meshFilter, PlantStateMachine plantReference)
     {
-        this.meshFilter = meshFilter;
-        this.seedSpawn = seedObject;
+        this.meshFilter = meshFilter;        
         this.plantReference = plantReference;     
     }
 

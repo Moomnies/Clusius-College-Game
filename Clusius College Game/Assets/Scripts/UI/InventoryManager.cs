@@ -64,6 +64,7 @@ namespace Inventory
         void PlayerIsSelectingAPlant(string plantID)
         {           
             playerIsChoosing = true;
+            itemToPlant = null;
 
             UIToggle.ToggleUIComponent();
 
