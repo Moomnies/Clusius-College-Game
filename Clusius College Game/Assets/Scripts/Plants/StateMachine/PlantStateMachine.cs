@@ -20,6 +20,7 @@ public class PlantStateMachine : MonoBehaviour
     public string GetID { get => plantID; }
     public IState currentPlantState { get => _StateMachine.GetCurrentState(); }
     public Seed PlantedSeed { get => _PlantedSeed; set => _PlantedSeed = value; }
+    public TimerScript Timer { get => timer; set => timer = value; }
 
     private void Awake()
     {       
@@ -27,8 +28,8 @@ public class PlantStateMachine : MonoBehaviour
 
         var digging = new Digging(meshFilter);
         var beingPlanted = new BeingPlanted(meshFilter, this);
-        var growing = new Growing(this, timer, meshFilter);
-        var harvestingB = new HarvestingBehaviour(timer, this);
+        var growing = new Growing(this, Timer, meshFilter);
+        var harvestingB = new HarvestingBehaviour(Timer, this);
 
         void At(IState to, IState from, Func<bool> condition) => _StateMachine.AddTransition(to, from, condition);
 

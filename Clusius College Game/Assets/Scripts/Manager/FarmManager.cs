@@ -65,15 +65,19 @@ public static class FarmManager
 
         if (plantID != null && plantInformationUI != null)
         {
-            PlantStateMachine currentPlant = _PlantInScene[plantID];
-
-            TMP_Text text =  plantInformationUI.transform.GetComponentInChildren<TMP_Text>();
-            text.text = currentPlant.PlantedSeed.TypeOfProduce.name;
-
-            plantInformationUI.transform.position = new Vector3(currentPlant.transform.position.x, 
-                currentPlant.transform.position.y + 175, currentPlant.transform.position.z);           
-
+            SetPlantData(_PlantInScene[plantID]);
         }
         else { Debug.LogFormat("FARMMANAGER.SHOWPLANTDATA: Something is null! PlantID: {0}, UIComponent: {1}", plantID, plantInformationUI.name);    }
+    }
+
+    private static void SetPlantData(PlantStateMachine currentPlant)
+    {
+        PlantInformationUI informationUI =  plantInformationUI.GetComponent<PlantInformationUI>();
+
+        informationUI.SetTimerScript(currentPlant.Timer);
+        informationUI.SetPlantName(currentPlant.PlantedSeed.TypeOfProduce.name); 
+
+        plantInformationUI.transform.position = new Vector3(currentPlant.transform.position.x,
+            currentPlant.transform.position.y + 175, currentPlant.transform.position.z);
     }
 }
