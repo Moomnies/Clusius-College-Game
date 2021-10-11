@@ -8,28 +8,26 @@ public class TimerScript : MonoBehaviour
 {
     public event Action onTimerRunOut;   
     
-    bool _IsTimerOn = false;
-    bool _TimerIsRunning = false;
-    float _TimeCount;
-    float _CurrentTimer;
+    bool isTimerOn = false;
+    bool timerIsRunning = false;
 
-    public float CurrentTimer { get => _CurrentTimer; set => _CurrentTimer = value; }
+    float timeCount;
+    float currentTimer;
 
-    public void SetTimerValue(float timeCount) => _TimeCount = timeCount;
+    public float GetCurrentTimer { get => currentTimer; }
+    public float GetTimeCount { get => timeCount; }
+    public void SetTimerValue(float timeCount) => this.timeCount = timeCount;
 
-    void Update() => CountDownTimer();
-    public void ResetTimer()
-    {       
-        _CurrentTimer = _TimeCount;
-    }
+    void Update() => CountDownTimer();    
+    void ResetTimer() => currentTimer = timeCount;   
 
     void CountDownTimer()
     {
-        if (_TimerIsRunning && _CurrentTimer > -.1)
+        if (timerIsRunning && currentTimer > -.1)
         {
-            _CurrentTimer -= Time.deltaTime;            
+            currentTimer -= Time.deltaTime;            
         }
-        else if (_TimerIsRunning && _CurrentTimer <= -.1)
+        else if (timerIsRunning && currentTimer <= -.1)
         {            
             onTimerRunOut();            
         }
@@ -37,15 +35,13 @@ public class TimerScript : MonoBehaviour
 
     public void ToggleOnOffTimmer()
     {
-        _IsTimerOn = !_IsTimerOn;           
+        isTimerOn = !isTimerOn;           
 
-        if (_IsTimerOn)
+        if (isTimerOn)
         {          
-            _TimerIsRunning = true;
-            _CurrentTimer = _TimeCount;
+            timerIsRunning = true;
+            currentTimer = timeCount;
             onTimerRunOut += ResetTimer;
         }
-    }
-    
-   
+    }   
 }

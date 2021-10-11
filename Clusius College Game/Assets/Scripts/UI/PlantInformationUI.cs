@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class PlantInformationUI : MonoBehaviour
 {
     [SerializeField] TMP_Text timer;
     [SerializeField] TMP_Text plantName;
+
+    [SerializeField] Slider progessionSlider;
+
     TimerScript plantTimer;
 
     public void SetTimerScript(TimerScript timer)
@@ -29,7 +33,8 @@ public class PlantInformationUI : MonoBehaviour
     {
         if(plantTimer != null)
         {
-            DisplayTime(plantTimer.CurrentTimer);
+            DisplayTime(plantTimer.GetCurrentTimer);
+            progessionSlider.value = 1 - (plantTimer.GetCurrentTimer / plantTimer.GetTimeCount);            
         }
     }
 
