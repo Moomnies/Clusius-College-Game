@@ -35,13 +35,17 @@ public class TimerScript : MonoBehaviour
 
     public void ToggleOnOffTimmer()
     {
-        isTimerOn = !isTimerOn;           
+        isTimerOn = !isTimerOn;
 
         if (isTimerOn)
-        {          
+        {
             timerIsRunning = true;
             currentTimer = timeCount;
             onTimerRunOut += ResetTimer;
+        }
+        else 
+        { 
+            timerIsRunning = false; 
         }
     }   
 }

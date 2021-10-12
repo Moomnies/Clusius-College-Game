@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Inventory;
 
 [CreateAssetMenu(fileName = "New Plant", menuName = "Plant")]
 public class Plant : ScriptableObject

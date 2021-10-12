@@ -4,20 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Inventory;
 
 public static class FarmManager
 {    
-    public static event Action<string> PlayerNeedToSelectAPlant;    
+    public static event Action<string> PlayerNeedToSelectAPlant;   
     
     private static Dictionary<string, PlantStateMachine> _PlantInScene = new Dictionary<string, PlantStateMachine>();
 
     private static GameObject plantInformationUI;
-    
+
     public static void AttachUIComponent(GameObject UIcomponent)
     {
-        plantInformationUI = UIcomponent;
-    }
+        plantInformationUI = UIcomponent;         
+    }    
 
     public static void PlayerNeedsToSelectPlant(string plantID)
     {
@@ -68,7 +67,7 @@ public static class FarmManager
             SetPlantData(_PlantInScene[plantID]);
         }
         else { Debug.LogFormat("FARMMANAGER.SHOWPLANTDATA: Something is null! PlantID: {0}, UIComponent: {1}", plantID, plantInformationUI.name);    }
-    }
+    }   
 
     private static void SetPlantData(PlantStateMachine currentPlant)
     {

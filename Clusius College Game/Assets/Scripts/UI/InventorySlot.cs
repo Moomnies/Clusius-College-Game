@@ -1,22 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Inventory;
 using UnityEngine.UI;
 
-namespace Inventory
-{
     public class InventorySlot : MonoBehaviour
     {
         [SerializeField] InventoryIcon icon;
         [SerializeField] Button button;       
 
-        int index;        
-        Inventory inventory;
+        int index;
+        PlayerInventory inventory;
         InventoryManager inventoryManager;
         
 
-        public void Setup(Inventory inventory, int index, InventoryManager gameManager)
+        public void Setup(PlayerInventory inventory, int index, InventoryManager gameManager)
         {
             this.inventoryManager = gameManager;
             this.inventory = inventory;
@@ -35,4 +32,4 @@ namespace Inventory
             inventoryManager.ItemSelected(inventory.GetItemInSlot(index));
         }
     } 
-}
+

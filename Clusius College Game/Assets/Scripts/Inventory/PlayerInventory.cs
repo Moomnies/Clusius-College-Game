@@ -5,9 +5,9 @@ using UnityEditor;
 using UnityEngine;
 using Saving;
 
-namespace Inventory
-{
-    public class Inventory : MonoBehaviour, ISaveable
+
+
+    public class PlayerInventory : MonoBehaviour, ISaveable
     {
         public event Action inventoryUpdated;
 
@@ -16,11 +16,12 @@ namespace Inventory
         [SerializeField] int inventorySize = 24;
 
         [SerializeField] Item[] slots;     
-        public int GetSize { get => slots.Length; }       
-        public static Inventory GetPlayerInventory()
+        public int GetSize { get => slots.Length; }
+       
+        public static PlayerInventory GetPlayerInventory()
         {
             var player = GameObject.FindWithTag("Player");
-            return player.GetComponent<Inventory>();
+            return player.GetComponent<PlayerInventory>();
         }
 
         public bool AddToFirstEmptySlot(Item itemToAdd)
@@ -37,7 +38,6 @@ namespace Inventory
             {
                 inventoryUpdated();               
             }
-
             
             return true;
         }
@@ -137,4 +137,4 @@ namespace Inventory
             }
         }
     }
-}
+

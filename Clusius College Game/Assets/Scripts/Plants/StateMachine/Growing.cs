@@ -1,4 +1,3 @@
-using Inventory;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +30,7 @@ public class Growing : MonoBehaviour, IState
         {
             timer.SetTimerValue(seedPlanted.TimeToGrow);
             timer.ToggleOnOffTimmer();
-            timer.onTimerRunOut += NextPlantStage;
+            timer.onTimerRunOut += NextPlantStage;            
         }
         else { Debug.LogFormat("GROWING.TICK(): Timer is null! Timer: {0} In Plant: {1}", timer, plantState.GetID); }
 
@@ -62,12 +61,13 @@ public class Growing : MonoBehaviour, IState
     void NextPlantStage()
     {       
         orderInPlantMeshes++;
-        thisPlantsMesh.mesh = plantMeshes[orderInPlantMeshes];      
-      
+        thisPlantsMesh.mesh = plantMeshes[orderInPlantMeshes];
+
         if (orderInPlantMeshes == plantMeshes.Length - 1)
         {
-            plantIsDoneGrowing = true; 
+            plantIsDoneGrowing = true;
             plantState.ExecuteBehaviourOnClick();
-        }
+            return;
+        }        
     }
 }

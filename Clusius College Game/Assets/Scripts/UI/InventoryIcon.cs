@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Inventory
-{
     public class InventoryIcon : MonoBehaviour
     {     
         public void SetItem(Item item, Button button)
@@ -24,4 +22,4 @@ namespace Inventory
             }
         }
     }
-}
+

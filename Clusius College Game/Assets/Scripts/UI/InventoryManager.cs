@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Inventory
-{
     public class InventoryManager : MonoBehaviour
     {        
         [SerializeField]
         Transform _ContentFieldInventory;
         [SerializeField]
-        Inventory playerInventory;
+        PlayerInventory playerInventory;
         [SerializeField]
         GameObject inventory;
         [SerializeField]
@@ -32,11 +30,14 @@ namespace Inventory
 
             FarmManager.PlayerNeedToSelectAPlant += PlayerIsSelectingAPlant;
 
-            if (playerInventory == null)
+            if (playerInventory != null)
             {
-                playerInventory = Inventory.GetPlayerInventory();
+                playerInventory = PlayerInventory.GetPlayerInventory();
                 playerInventory.inventoryUpdated += Redraw;                
             }
+
+            this.inventoryUI.SetActive(false);
+
         }  
         
         public void ItemSelected(Item item)
@@ -60,12 +61,13 @@ namespace Inventory
             {
                 var itemUI = Instantiate(itemPrefab, transform);
                 itemUI.Setup(playerInventory, i, this);
-            }
+            }          
         }
 
         void PlayerIsSelectingAPlant(string plantID)
         {            
             playerIsChoosing = true;
+
             itemToPlant = null;
 
             this.inventoryUI.SetActive(true);
@@ -77,7 +79,8 @@ namespace Inventory
                 yield return new WaitUntil(() => itemToPlant != null);
                 this.inventoryUI.SetActive(false);
                 FarmManager.PlantIsSelected(plantID, itemToPlant);
+                playerIsChoosing = false;
             }                                    
         }
-    }
+    
 }

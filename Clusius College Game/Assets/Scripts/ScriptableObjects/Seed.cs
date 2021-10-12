@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Inventory
-{
     [CreateAssetMenu(fileName = "Seed", menuName = "InventoryItem/Seed")]
     public class Seed : Item
     {
@@ -18,7 +16,7 @@ namespace Inventory
         [Header("Produce Data")]
         [SerializeField]
         [Tooltip("SO of Item that needs to be added to Inventory on Harvest.")]
-        Item _Produce;
+        Produce _Produce;
         [SerializeField]
         [Tooltip("Maximum number of produce that can be taken from this plant.")]
         float _MaxNumberOfProduce;
@@ -28,10 +26,10 @@ namespace Inventory
         //Getter and Setter for Acces Variables
         public float TimeToGrow { get => _TimeToGrow; }
         public Mesh[] PlantModels { get => _PlantModels; }
-        public Item TypeOfProduce { get => _Produce; }
+        public Produce TypeOfProduce { get => _Produce; }
         public float MaxNumberOfProduce { get => _MaxNumberOfProduce; }
         public bool RegrowProduce { get => regrowProduce; }
     }
-}
+
 
 
