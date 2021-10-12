@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {  
-    [SerializeField] Camera _Camera;  
-    
+    [SerializeField] Camera _Camera;
+
     void Update()
     {
         if (Input.touchCount > 0) 
@@ -14,6 +15,12 @@ public class Player : MonoBehaviour
             Vector3 pointClickedOnScreen = touch.position;
             RaycastHit hit;
             Ray ray = _Camera.ScreenPointToRay(pointClickedOnScreen);
+
+            if (EventSystem.current.IsPointerOverGameObject(0))    // is the touch on the GUI
+            {
+                // GUI Action
+                return;
+            }
 
             if (Physics.Raycast(ray, out hit) && hit.collider.GetComponent<PlantStateMachine>())
             {
