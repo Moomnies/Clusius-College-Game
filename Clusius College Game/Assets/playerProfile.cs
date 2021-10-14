@@ -10,34 +10,36 @@ public class playerProfile : MonoBehaviour
     [SerializeField] float PreviusLevelExp;
     [SerializeField] float CurrentLevelExp;
     [SerializeField] float PlayerLevel;
+    [SerializeField] string name;
+    string[] firstName = { "cute","long","big","tiny","red","blue"};
+    string[] secondName = { "sad","strong","lazy","toasted", "disrupted", "super"};
+    string[] thirdName = { "dragon","box","farmer","scarecrow","panda","pumkin"};
     [SerializeField] TMPro.TextMeshProUGUI levelText;
     [SerializeField] TMPro.TextMeshProUGUI ExpText;
+    [SerializeField] TMPro.TextMeshProUGUI nameText;
     [SerializeField] Slider sliderExp;
 
-
-    // Start is called before the first frame update
-    void Start()
+    void earnExp(float amount)
     {
-        
-    }
-
-    // Update is called once per frame GetComponent<TMPro.TextMeshProUGUI>().text
-    void Update()
-    {
+        totalExp += amount;
         nextLevelExp = 100 * Mathf.Sqrt(PlayerLevel);
         CurrentLevelExp = (totalExp - PreviusLevelExp);
-        ExpText.text = ((int)CurrentLevelExp).ToString() +"/"+ ((int)nextLevelExp).ToString();
-        levelText.text = PlayerLevel.ToString();
-        sliderExp.value = CurrentLevelExp;
-        sliderExp.maxValue = nextLevelExp;
 
         if (totalExp > (PreviusLevelExp + nextLevelExp))
         {
             PreviusLevelExp = totalExp;
             PlayerLevel++;
         }
+        sliderExp.maxValue = nextLevelExp;
+        sliderExp.value = CurrentLevelExp;
+        ExpText.text = ((int)CurrentLevelExp).ToString() + "/" + ((int)nextLevelExp).ToString();
+        levelText.text = PlayerLevel.ToString();
     }
 
-
-
+    public void changeName()
+    {
+        name = (firstName[(int)Random.Range(0, firstName.Length)] +" "+ secondName[(int)Random.Range(0, secondName.Length)] +" "+ thirdName[(int)Random.Range(0, thirdName.Length)]);
+        nameText.text = name;
+    }
 }
+ 
