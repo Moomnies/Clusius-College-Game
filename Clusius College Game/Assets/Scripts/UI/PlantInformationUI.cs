@@ -29,6 +29,7 @@ public class PlantInformationUI : MonoBehaviour
     void Start()
     {
         FarmManager.AttachUIComponent(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 
     private void Update()

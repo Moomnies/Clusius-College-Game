@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
                     FarmManager.ThisPlantIsTouched(hit.collider.GetComponent<PlantStateMachine>().GetID);
                 }
             }
+            else { FarmManager.TogglePlantInformation(); }            
         }      
     }
 }

@@ -13,6 +13,8 @@ public static class FarmManager
 
     private static GameObject plantInformationUI;
 
+    private static PlayerInventory inventory;
+
     public static void AttachUIComponent(GameObject UIcomponent)
     {
         plantInformationUI = UIcomponent;         
@@ -32,6 +34,7 @@ public static class FarmManager
         if (plantID != null && selectedPlant != null)
         {           
             _PlantInScene[plantID].PlantedSeed = selectedPlant;
+
 
             //Execute StateMachine Tick so Behaviour is Switched to Growing. Needs to be done here because PlayerNeedToSelectAPlant is an Event. 
             _PlantInScene[plantID].ExecuteBehaviourOnClick();
@@ -60,7 +63,10 @@ public static class FarmManager
     
     public static void ShowPlantData(string plantID)
     {
-        Debug.Log(plantID);
+        if (!plantInformationUI.activeSelf)
+        {
+            TogglePlantInformation();
+        }
 
         if (plantID != null && plantInformationUI != null)
         {            
@@ -69,9 +75,34 @@ public static class FarmManager
         else { Debug.LogFormat("FARMMANAGER.SHOWPLANTDATA: Something is null! PlantID: {0}, UIComponent: {1}", plantID, plantInformationUI.name);    }
     }   
 
+    public static void TogglePlantInformation()
+    {
+        plantInformationUI.SetActive(!plantInformationUI.activeSelf);
+    }
+
+    public static bool AddProduceToInventory(Produce produce)
+    {
+        if(inventory == null)
+        {
+            inventory = PlayerInventory.GetPlayerInventory();
+        }
+
+        bool succesfullyAdded = inventory.AddToFirstEmptySlot(produce);
+
+        return succesfullyAdded;
+    }
+
+    public static void RemoveItemFromInventory(Item item)
+    {
+        if (inventory == null)
+        {
+            inventory = PlayerInventory.GetPlayerInventory();
+        }       
+    }
+
     private static void SetPlantData(PlantStateMachine currentPlant)
     {
-        PlantInformationUI informationUI =  plantInformationUI.GetComponent<PlantInformationUI>();
+        PlantInformationUI informationUI =  plantInformationUI.GetComponent<PlantInformationUI>();       
 
         informationUI.SetTimerScript(currentPlant.Timer);
         informationUI.SetPlantName(currentPlant.PlantedSeed.TypeOfProduce.name); 
@@ -79,4 +110,5 @@ public static class FarmManager
         plantInformationUI.transform.position = new Vector3(currentPlant.transform.position.x,
             currentPlant.transform.position.y + 175, currentPlant.transform.position.z);
     }
+
 }

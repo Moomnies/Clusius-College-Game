@@ -60,15 +60,16 @@ public class Growing : MonoBehaviour, IState
     }
 
     void NextPlantStage()
-    {       
-        orderInPlantMeshes++;
-        thisPlantsMesh.mesh = plantMeshes[orderInPlantMeshes];
-
+    {      
         if (orderInPlantMeshes == plantMeshes.Length - 1)
         {
             plantIsDoneGrowing = true;
             plantState.ExecuteBehaviourOnClick();
             return;
-        }        
+        }
+
+        orderInPlantMeshes++;
+        thisPlantsMesh.mesh = plantMeshes[orderInPlantMeshes];
+
     }
 }

@@ -32,8 +32,7 @@ public class HarvestingBehaviour : MonoBehaviour, IState
 
     public void Tick()
     {
-        Harvested = inventory.AddToFirstEmptySlot(seed.TypeOfProduce);
-        
+        Harvested = FarmManager.AddProduceToInventory(seed.TypeOfProduce);        
     }
 
     public void OnExit()
