@@ -16,9 +16,8 @@ public class Player : MonoBehaviour
             RaycastHit hit;
             Ray ray = _Camera.ScreenPointToRay(pointClickedOnScreen);
 
-            if (EventSystem.current.IsPointerOverGameObject(0))    // is the touch on the GUI
-            {
-                // GUI Action
+            if (EventSystem.current.IsPointerOverGameObject(0))
+            {              
                 return;
             }
 

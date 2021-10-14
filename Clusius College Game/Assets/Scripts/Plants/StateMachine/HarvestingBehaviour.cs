@@ -5,10 +5,13 @@ using UnityEngine;
 public class HarvestingBehaviour : MonoBehaviour, IState
 {
     TimerScript timer;
+
     PlantStateMachine plantReference;
+
     Seed seed;
 
-    bool harvested = false;
+    bool harvested;
+
     PlayerInventory inventory;
 
     public bool Harvested { get => harvested; set => harvested = value; }
@@ -22,6 +25,7 @@ public class HarvestingBehaviour : MonoBehaviour, IState
 
     public void OnEnter()
     {
+        harvested = false;
         seed = plantReference.PlantedSeed;
         plantReference.FruitSpawn.SetActive(true);
     }
@@ -29,10 +33,14 @@ public class HarvestingBehaviour : MonoBehaviour, IState
     public void Tick()
     {
         Harvested = inventory.AddToFirstEmptySlot(seed.TypeOfProduce);
+        
     }
 
     public void OnExit()
     {
-        
-    }    
+        plantReference.FruitSpawn.SetActive(false);
+        harvested = false;        
+        plantReference.ResetPlant();
+    }
 }
+   

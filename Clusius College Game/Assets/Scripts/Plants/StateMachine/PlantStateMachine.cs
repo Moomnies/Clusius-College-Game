@@ -14,6 +14,7 @@ public class PlantStateMachine : MonoBehaviour
     [SerializeField] MeshFilter meshFilter;
     [SerializeField] TimerScript timer;
     [SerializeField] GameObject fruitSpawn;
+    [SerializeField] Mesh startMesh;
 
     [Header("DEBUG MODE")]
     [SerializeField] bool debugMode; 
@@ -54,4 +55,10 @@ public class PlantStateMachine : MonoBehaviour
     }
 
     public void ExecuteBehaviourOnClick() => _StateMachine.Tick();  
+
+    public void ResetPlant()
+    {
+        PlantedSeed = null;
+        meshFilter.mesh = startMesh;
+    }
 }

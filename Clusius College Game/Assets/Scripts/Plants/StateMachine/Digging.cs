@@ -6,6 +6,7 @@ using UnityEngine;
 public class Digging : MonoBehaviour, IState
 {
     MeshFilter meshFilter;
+
     bool holeIsDug = false;
 
     public bool IsHoleDug { get => holeIsDug; }

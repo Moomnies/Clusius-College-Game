@@ -20,11 +20,7 @@ using UnityEngine.UI;
             this.index = index;  
             
             icon.SetItem(inventory.GetItemInSlot(index), button);
-
-            if (button.IsActive())
-            {
-                button.onClick.AddListener(BeenClicked);
-            }
+            button.onClick.AddListener(BeenClicked);
         }
 
         public void BeenClicked()

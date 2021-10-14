@@ -63,7 +63,7 @@ public static class FarmManager
         Debug.Log(plantID);
 
         if (plantID != null && plantInformationUI != null)
-        {
+        {            
             SetPlantData(_PlantInScene[plantID]);
         }
         else { Debug.LogFormat("FARMMANAGER.SHOWPLANTDATA: Something is null! PlantID: {0}, UIComponent: {1}", plantID, plantInformationUI.name);    }

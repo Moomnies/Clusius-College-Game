@@ -25,6 +25,7 @@ public class Growing : MonoBehaviour, IState
     {
         seedPlanted = plantState.PlantedSeed;
         plantIsDoneGrowing = false;
+        orderInPlantMeshes = 0;
 
         if (timer != null)
         {
@@ -43,7 +44,7 @@ public class Growing : MonoBehaviour, IState
                 plantMeshes[i] = seedPlanted.PlantModels[i];
             }
 
-            orderInPlantMeshes = 0;
+            
             thisPlantsMesh.mesh = plantMeshes[orderInPlantMeshes];
         }
     }

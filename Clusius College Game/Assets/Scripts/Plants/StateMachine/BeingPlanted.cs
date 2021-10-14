@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class BeingPlanted : MonoBehaviour, IState
 {
-    MeshFilter meshFilter;
-
     bool isPlantPlanted;
-    GameObject seedSpawn;
-    string plantID;
-    PlantStateMachine plantReference;
 
-    public bool IsPlantPlanted { get => isPlantPlanted; }
+    string plantID;
+
+    PlantStateMachine plantReference;   
 
     public BeingPlanted(MeshFilter meshFilter, PlantStateMachine plantReference)
-    {
-        this.meshFilter = meshFilter;        
+    {        
         this.plantReference = plantReference;     
     }
 

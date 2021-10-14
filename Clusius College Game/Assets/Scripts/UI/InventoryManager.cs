@@ -44,7 +44,8 @@ using UnityEngine.UI;
         {
             if (playerIsChoosing && item is Seed)
             {
-                itemToPlant = item as Seed;                
+                itemToPlant = item as Seed;
+                Debug.Log("1");
                 return;
             }
             
@@ -67,8 +68,8 @@ using UnityEngine.UI;
         void PlayerIsSelectingAPlant(string plantID)
         {            
             playerIsChoosing = true;
-
             itemToPlant = null;
+
 
             this.inventoryUI.SetActive(true);
 
@@ -76,8 +77,13 @@ using UnityEngine.UI;
 
             IEnumerator WaitTillPlantIsSelected()
             {
+                itemToPlant = null;
+                Debug.Log("2");
+
                 yield return new WaitUntil(() => itemToPlant != null);
                 this.inventoryUI.SetActive(false);
+
+                Debug.Log("3");
                 FarmManager.PlantIsSelected(plantID, itemToPlant);
                 playerIsChoosing = false;
             }                                    
